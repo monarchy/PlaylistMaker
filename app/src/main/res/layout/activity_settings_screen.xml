@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context=".SettingsActivity"
-android:id="@+id/settingsScreen"
-    android:theme="@style/Theme.MyApp"
-    android:background="?attr/colorPrimaryVariant"
-
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".SettingsActivity"
+    android:id="@+id/settingsScreen">
 
 
 <LinearLayout
@@ -17,26 +14,13 @@ android:id="@+id/settingsScreen"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_marginBottom="24dp"
-    android:padding="@dimen/standard_padding"
     >
-
-    <ImageView
-        android:layout_width="24dp"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/arrow_back"
+        app:navigationIcon="@drawable/arrow_back"
         android:id="@+id/goBackButton"
-        android:foreground="?attr/selectableItemBackground"
-
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/standard_padding"
-        android:text="@string/settings_h"
-        android:textColor="?attr/colorPrimary"
-        android:textSize="@dimen/text_size"
-        android:textStyle="bold"
+        app:title="@string/settings_h"
         />
 </LinearLayout>
 
@@ -45,8 +29,9 @@ android:id="@+id/settingsScreen"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="@dimen/standard_padding"
-    android:gravity="center_vertical">
+    android:padding="16dp"
+    android:gravity="center_vertical"
+    android:background="@color/white">
 
     <TextView
         android:layout_width="0dp"
@@ -56,9 +41,10 @@ android:id="@+id/settingsScreen"
         android:textColor="@color/black"
         android:textSize="@dimen/small_text_size" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 </LinearLayout>
 
@@ -67,20 +53,24 @@ android:id="@+id/settingsScreen"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="@dimen/standard_padding"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="@color/white">
 
     <TextView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="@string/share_app_text"
         android:textColor="@color/black"
-        android:textSize="@dimen/small_text_size" />
+        android:textSize="@dimen/small_text_size"
+        android:background="@color/white"/>
 
     <ImageView
+        android:id="@+id/shareButton"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/share" />
+        android:src="@drawable/share"
+        android:background="@color/white"/>
 </LinearLayout>
 
 
@@ -89,7 +79,8 @@ android:id="@+id/settingsScreen"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="@dimen/standard_padding"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="@color/white">
 
     <TextView
         android:layout_width="0dp"
@@ -97,13 +88,15 @@ android:id="@+id/settingsScreen"
         android:layout_weight="1"
         android:text="@string/wrote_to_tech"
         android:textColor="@color/black"
-        android:textSize="@dimen/small_text_size" />
+        android:textSize="@dimen/small_text_size"
+        android:background="@color/white"/>
 
     <ImageView
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/support"
-        android:id="@+id/writeToSupport"/>
+        android:id="@+id/writeToSupport"
+        android:background="@color/white"/>
 </LinearLayout>
 
 
@@ -112,7 +105,8 @@ android:id="@+id/settingsScreen"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="@dimen/standard_padding"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="@color/white">
 
     <TextView
         android:layout_width="0dp"
@@ -120,12 +114,15 @@ android:id="@+id/settingsScreen"
         android:layout_weight="1"
         android:text="@string/consumers_agreement"
         android:textColor="@color/black"
-        android:textSize="@dimen/small_text_size" />
+        android:textSize="@dimen/small_text_size"
+        android:background="@color/white"/>
 
     <ImageView
+        android:id="@+id/user_agreement_button"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/arrow_forward" />
+        android:src="@drawable/arrow_forward"
+        android:background="@color/white"/>
 </LinearLayout>
 
 </LinearLayout>

@@ -3,4 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#3871F3</color>
+    <color name="arrow_back">#1A1B22</color>
+    <color name="arrow_forward">#AEAFB4</color>
+    <color name="mediateka_icon">#1A1B22</color>
 </resources>

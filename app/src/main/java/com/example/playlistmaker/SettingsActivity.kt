@@ -2,40 +2,88 @@ package com.example.playlistmaker
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.SwitchCompat
+import com.google.android.material.appbar.MaterialToolbar
 
 class SettingsActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
+
+    private lateinit var themeSwitch: SwitchCompat
+    private lateinit var sharedPrefs: SharedPreferences
+
+    @SuppressLint("MissingInflatedId", "QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
+        sharedPrefs = getSharedPreferences("theme_prefs", MODE_PRIVATE)
+        val isDarkMode = sharedPrefs.getBoolean("dark_mode", false)
+        setTheme(isDarkMode)
         setContentView(R.layout.activity_settings_screen)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.settingsScreen)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        themeSwitch = findViewById(R.id.switch_button)
+        themeSwitch.isChecked = isDarkMode
+        themeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            setTheme(isChecked)
+            sharedPrefs.edit().putBoolean("dark_mode", isChecked).apply()
         }
 
-        val goBackButton = findViewById<ImageView>(R.id.goBackButton)
-        goBackButton.setOnClickListener {
+        val goBackButton = findViewById<MaterialToolbar>(R.id.goBackButton)
+        goBackButton.setNavigationOnClickListener {
             val displayIntent = Intent(this, MainActivity::class.java)
             startActivity(displayIntent)
         }
 
         val writeToSupport = findViewById<ImageView>(R.id.writeToSupport)
-        writeToSupport.setOnClickListener{
-            val message = "Здравствуйте, мой вопрос это: "
+        writeToSupport.setOnClickListener {
+            val message: String = getString(R.string.message_to)
+            val subject: String = getString(R.string.subject)
+            val myEmail: String = getString(R.string.my_email)
             val writeIntent = Intent(Intent.ACTION_SENDTO)
             writeIntent.data = Uri.parse("mailto:")
-            writeIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf("support@ya.ru"))
+            writeIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(myEmail))
+            writeIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
             writeIntent.putExtra(Intent.EXTRA_TEXT, message)
             startActivity(writeIntent)
         }
+
+        fun shareContent(title: String, text: String) {
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TITLE, title)
+                putExtra(Intent.EXTRA_TEXT, text)
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.choose_app)))
+        }
+
+        val shareButton = findViewById<ImageView>(R.id.shareButton)
+        shareButton.setOnClickListener {
+            shareContent(getString(R.string.share_title), getString(R.string.share_message))
+        }
+
+        val userAgreementButton = findViewById<ImageView>(R.id.user_agreement_button)
+        userAgreementButton.setOnClickListener{
+            val userAgreementIntent = Intent(Intent.ACTION_VIEW).apply {
+                val url = getString(R.string.agreement_url)
+                data = Uri.parse(url)
+            }
+            if (intent.resolveActivity(packageManager)!=null){
+                startActivity(userAgreementIntent)
+            }
+        }
     }
+
+    private fun setTheme(isDarkMode: Boolean) {
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+    }
+
 }
