@@ -24,12 +24,20 @@
 
     </LinearLayout>
 
-    <SearchView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        app:cardCornerRadius="8dp"
+        android:backgroundTint="#E6E8EB"
+        android:layout_margin="15dp">
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="#E6E8EB"
-        app:cornerRadius = "15dp"
-         />
+        android:focusable="true"
+        android:queryHint = "Поиск"
+        />
+    </com.google.android.material.card.MaterialCardView>
+    />
 
 </LinearLayout>
