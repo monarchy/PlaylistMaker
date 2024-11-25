@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textview.MaterialTextView
 
@@ -27,6 +28,8 @@ class SettingsActivity : AppCompatActivity() {
         setTheme(isDarkMode)
         setContentView(R.layout.activity_settings_screen)
         themeSwitch = findViewById(R.id.darkThemeSwitch)
+        themeSwitch.thumbTintList = ContextCompat.getColorStateList(this, R.color.switch_thumb_color)
+        themeSwitch.trackTintList = ContextCompat.getColorStateList(this, R.color.switch_track_color)
         themeSwitch.isChecked = isDarkMode
         themeSwitch.setOnCheckedChangeListener { _, isChecked ->
             setTheme(isChecked)
