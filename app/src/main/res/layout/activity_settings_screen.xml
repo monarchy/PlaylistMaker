@@ -8,122 +8,78 @@
     tools:context=".SettingsActivity"
     android:id="@+id/settingsScreen">
 
-
-    <LinearLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/goBackButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:tooltipText="@string/settings_h"
+        app:navigationIcon="@drawable/arrow_back"
+        app:title="@string/settings"
+        app:popupTheme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+        tools:ignore="RtlSymmetry"
+        app:contentInsetStartWithNavigation="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="25dp"
+        android:textSize="@dimen/text_size"
+        android:fontFamily="@font/ys_display_medium"
+        android:textFontWeight="500"/>
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/goBackButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/arrow_back"
-            app:title="@string/settings">
 
-        </com.google.android.material.appbar.MaterialToolbar>
-
-    </LinearLayout>
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="16dp"
-    android:gravity="center_vertical"
-    android:background="@color/white">
-
-    <TextView
-        android:layout_width="0dp"
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/darkThemeSwitch"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp"
         android:text="@string/dark_theme_text"
-        android:textColor="@color/black"
-        android:textSize="@dimen/small_text_size" />
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch_button"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
-</LinearLayout>
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="@dimen/standard_padding"
-    android:gravity="center_vertical"
-    android:background="@color/white">
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="@string/share_app_text"
-        android:textColor="@color/black"
         android:textSize="@dimen/small_text_size"
-        android:background="@color/white"/>
+        android:fontFamily="@font/ys_display_medium"
+        android:textFontWeight="500"/>
 
-    <ImageView
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/shareButton"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/share"
-        android:background="@color/white"/>
-</LinearLayout>
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="@dimen/standard_padding"
-    android:gravity="center_vertical"
-    android:background="@color/white">
-
-    <TextView
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/wrote_to_tech"
-        android:textColor="@color/black"
+        android:drawableEnd="@drawable/share"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp"
+        android:text="@string/share_app_text"
         android:textSize="@dimen/small_text_size"
-        android:background="@color/white"/>
+        android:textColor="@color/black"
+        android:paddingEnd="20dp"
+        tools:ignore="RtlSymmetry"
+        android:fontFamily="@font/ys_display_medium"
+        android:textFontWeight="500"/>
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/support"
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/writeToSupport"
-        android:background="@color/white"/>
-</LinearLayout>
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="@dimen/standard_padding"
-    android:gravity="center_vertical"
-    android:background="@color/white">
-
-    <TextView
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/consumers_agreement"
-        android:textColor="@color/black"
+        android:drawableEnd="@drawable/support"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp"
+        android:text="@string/wrote_to_tech"
         android:textSize="@dimen/small_text_size"
-        android:background="@color/white"/>
+        android:textColor="@color/black"
+        android:fontFamily="@font/ys_display_medium"
+        android:textFontWeight="500"/>
 
-    <ImageView
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/user_agreement_button"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/arrow_forward"
-        android:background="@color/white"/>
-</LinearLayout>
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/arrow_forward"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp"
+        android:text="@string/consumers_agreement"
+        android:textSize="@dimen/small_text_size"
+        android:textColor="@color/black"
+        android:paddingEnd="20dp"
+        tools:ignore="RtlSymmetry"
+        android:fontFamily="@font/ys_display_medium"
+        android:textFontWeight="500"/>
 </LinearLayout>

@@ -10,7 +10,7 @@
     >
 
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +20,8 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size"
         android:fontFamily="@font/ys_display_medium"
-        android:textFontWeight="500"/>
+        android:textFontWeight="500"
+        android:layout_marginTop="40dp"/>
 
 
     <Button

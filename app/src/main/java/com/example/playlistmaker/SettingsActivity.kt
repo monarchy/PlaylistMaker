@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.textview.MaterialTextView
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -25,7 +26,7 @@ class SettingsActivity : AppCompatActivity() {
         val isDarkMode = sharedPrefs.getBoolean("dark_mode", false)
         setTheme(isDarkMode)
         setContentView(R.layout.activity_settings_screen)
-        themeSwitch = findViewById(R.id.switch_button)
+        themeSwitch = findViewById(R.id.darkThemeSwitch)
         themeSwitch.isChecked = isDarkMode
         themeSwitch.setOnCheckedChangeListener { _, isChecked ->
             setTheme(isChecked)
@@ -34,11 +35,10 @@ class SettingsActivity : AppCompatActivity() {
 
         val goBackButton = findViewById<MaterialToolbar>(R.id.goBackButton)
         goBackButton.setNavigationOnClickListener {
-            val displayIntent = Intent(this, MainActivity::class.java)
-            startActivity(displayIntent)
+            finish()
         }
 
-        val writeToSupport = findViewById<ImageView>(R.id.writeToSupport)
+        val writeToSupport = findViewById<MaterialTextView>(R.id.writeToSupport)
         writeToSupport.setOnClickListener {
             val message: String = getString(R.string.message_to)
             val subject: String = getString(R.string.subject)
@@ -61,12 +61,12 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(shareIntent, getString(R.string.choose_app)))
         }
 
-        val shareButton = findViewById<ImageView>(R.id.shareButton)
+        val shareButton = findViewById<MaterialTextView>(R.id.shareButton)
         shareButton.setOnClickListener {
             shareContent(getString(R.string.share_title), getString(R.string.share_message))
         }
 
-        val userAgreementButton = findViewById<ImageView>(R.id.user_agreement_button)
+        val userAgreementButton = findViewById<MaterialTextView>(R.id.user_agreement_button)
         userAgreementButton.setOnClickListener{
             val userAgreementIntent = Intent(Intent.ACTION_VIEW).apply {
                 val url = getString(R.string.agreement_url)
