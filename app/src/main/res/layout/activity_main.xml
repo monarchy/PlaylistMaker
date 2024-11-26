@@ -6,8 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
-    android:theme="@style/Theme.MyApp"
-    >
+    android:background="@color/backgroundColorForMain">
 
 
     <com.google.android.material.textview.MaterialTextView
@@ -24,7 +23,8 @@
         android:layout_marginTop="40dp"/>
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/RoundedButton"
         android:id="@+id/btnSearch"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -44,7 +44,8 @@
         android:textFontWeight="500"/>
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/RoundedButton"
         android:id="@+id/btnMedia"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -64,7 +65,8 @@
         android:textFontWeight="500"/>
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/RoundedButton"
         android:id="@+id/btnSettings"
         android:layout_width="match_parent"
         android:layout_height="0dp"

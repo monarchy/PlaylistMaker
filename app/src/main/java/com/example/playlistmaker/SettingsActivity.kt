@@ -3,6 +3,8 @@ package com.example.playlistmaker
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
@@ -19,7 +21,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var themeSwitch: SwitchCompat
     private lateinit var sharedPrefs: SharedPreferences
 
-    @SuppressLint("MissingInflatedId", "QueryPermissionsNeeded")
+    @SuppressLint("MissingInflatedId", "QueryPermissionsNeeded", "CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -35,6 +37,7 @@ class SettingsActivity : AppCompatActivity() {
             setTheme(isChecked)
             sharedPrefs.edit().putBoolean("dark_mode", isChecked).apply()
         }
+
 
         val goBackButton = findViewById<MaterialToolbar>(R.id.goBackButton)
         goBackButton.setNavigationOnClickListener {
