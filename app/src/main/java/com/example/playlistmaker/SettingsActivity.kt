@@ -23,8 +23,8 @@ class SettingsActivity : AppCompatActivity() {
 
     @SuppressLint("MissingInflatedId", "QueryPermissionsNeeded", "CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         sharedPrefs = getSharedPreferences("theme_prefs", MODE_PRIVATE)
         val isDarkMode = sharedPrefs.getBoolean("dark_mode", false)
         setTheme(isDarkMode)
@@ -37,7 +37,6 @@ class SettingsActivity : AppCompatActivity() {
             setTheme(isChecked)
             sharedPrefs.edit().putBoolean("dark_mode", isChecked).apply()
         }
-
 
         val goBackButton = findViewById<MaterialToolbar>(R.id.goBackButton)
         goBackButton.setNavigationOnClickListener {
@@ -91,5 +90,4 @@ class SettingsActivity : AppCompatActivity() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
-
 }

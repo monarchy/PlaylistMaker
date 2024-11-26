@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".SettingsActivity"
     android:id="@+id/settingsScreen"
-    android:backgroud="@color/backgroundColor">
+    android:background="@color/backgroundColor">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/goBackButton"
@@ -16,7 +16,6 @@
         android:tooltipText="@string/settings_h"
         app:navigationIcon="@drawable/arrow_back"
         app:title="@string/settings"
-        app:popupTheme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
         tools:ignore="RtlSymmetry"
         app:contentInsetStartWithNavigation="30dp"
         android:layout_marginTop="40dp"
@@ -25,7 +24,6 @@
         android:fontFamily="@font/ys_display_medium"
         android:textFontWeight="500"
         app:navigationIconTint="?attr/colorOnBackground"
-        android:background="@color/backgroundColor"
         app:titleTextColor="?attr/colorOnBackground"
         />
 
