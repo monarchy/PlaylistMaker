@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp"
-            android:backgroundTint="#E6E8EB">
+            android:backgroundTint="@color/searchBarColor">
 
             <EditText
                 android:id="@+id/searchEditText"
@@ -41,20 +41,24 @@
                 android:hint="@string/search"
                 android:textSize="16sp"
                 android:inputType="text"
+                android:textColorHint="@color/searchBarHintColor"
+                android:textColor="@color/black"
                 android:focusable="true"
                 android:singleLine="true"
                 android:drawableStart="@drawable/lupa"
-                android:drawablePadding="8dp"/>
-            <ImageView
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/searchBarHintColor"/>
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/clearButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="12dp"
                 android:visibility="gone"
-                android:src="@drawable/cross"
-                tools:ignore="ContentDescription"
-                android:background="@null"/>
+                app:srcCompat="@drawable/cross"
+                app:backgroundTint="@color/searchBarHintColor"
+                android:background="@android:color/transparent"
+                tools:ignore="ContentDescription" />
         </com.google.android.material.card.MaterialCardView>
     </FrameLayout>
 

@@ -2,9 +2,10 @@
     <!-- Base application theme. -->
     <style name="Theme.MyApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/backgroundColorForMain</item>
-        <item name="android:background">@color/backgroundColor</item>
         <item name="colorOnBackground">@color/onBackgroundColor</item>
+        <item name="colorPrimary">@color/secondaryColor</item>
         <item name="colorSurface">@color/surfaceColor</item>
         <item name="colorOnSurface">@color/onSurfaceColor</item>
+
     </style>
 </resources>

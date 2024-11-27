@@ -5,4 +5,8 @@
     <color name="onBackgroundColor">#FFFFFF</color>
     <color name="surfaceColor">#1E1E1E</color>
     <color name="onSurfaceColor">#FFFFFF</color>
+    <color name="secondaryColor">#FFFFFF</color>
+    <color name="searchBarColor">#FFFFFF</color>
+    <color name="searchBarHintColor">#121212</color>
+    <color name="arrow_back_light">#FFFFFF</color>"
 </resources>

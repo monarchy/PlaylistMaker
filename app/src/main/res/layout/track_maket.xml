@@ -7,7 +7,6 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/trackImage"
         android:layout_width="60dp"
@@ -16,24 +15,23 @@
         android:scaleType="centerCrop"
         app:shapeAppearanceOverlay="@style/RoundedCornersOfImage"/>
 
-
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
 
-
         <TextView
             android:id="@+id/trackName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:fontFamily="@font/ys_display_medium"
+            android:textFontWeight="500"
+            android:textColor="?attr/colorOnBackground"
             android:ellipsize="end"
-            android:singleLine="true" />
-
+            android:singleLine="true"
+            android:textSize="@dimen/small_text_size"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,8 +42,10 @@
                 android:id="@+id/artistName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@android:color/darker_gray"
+                android:textSize="11sp"
+                android:fontFamily="@font/ys_display_medium"
+                android:textFontWeight="500"
+                android:textColor="@color/secondaryColor"
                 android:ellipsize="end"
                 android:singleLine="true" />
 
@@ -56,15 +56,18 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:text="•"
-                android:textSize="14sp"
-                android:textColor="@android:color/darker_gray" />
+                android:fontFamily="@font/ys_display_medium"
+                android:textFontWeight="500"
+                android:textColor="@color/secondaryColor" />
 
             <TextView
                 android:id="@+id/trackTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@android:color/darker_gray" />
+                android:fontFamily="@font/ys_display_medium"
+                android:textFontWeight="500"
+                android:textSize="11sp"
+                android:textColor="@color/secondaryColor" />
         </LinearLayout>
     </LinearLayout>
 
@@ -75,6 +78,6 @@
         android:layout_gravity="center"
         android:contentDescription="@string/go_next"
         android:src="@drawable/arrow_forward"
-        app:tint="@android:color/darker_gray"
+        app:tint="@color/arrow_back_light"
         />
 </LinearLayout>
