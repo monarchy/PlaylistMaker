@@ -16,6 +16,7 @@
     <string name="share_message">https://practicum.yandex.ru/learn/android-developer-plus</string>
     <string name="choose_app">Выберите приложение</string>
     <string name="agreement_url">https://yandex.ru/legal/practicum_offer/</string>
+    <string name="go_next">Подробнее</string>
 </resources>
 
 
