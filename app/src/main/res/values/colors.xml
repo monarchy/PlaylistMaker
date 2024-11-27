@@ -3,4 +3,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#3871F3</color>
+    <color name="arrow_back">#1A1B22</color>
+    <color name="arrow_forward">#AEAFB4</color>
+    <color name="mediateka_icon">#1A1B22</color>
+    <color name="backgroundColor">#FFFFFF</color>"
+    <color name="backgroundColorForMain">#3772E7</color>
+    <color name="onBackgroundColor">#000000</color>
+    <color name="surfaceColor">#FFFFFF</color>
+    <color name="onSurfaceColor">#000000</color>
 </resources>
