@@ -27,7 +27,9 @@ class TrackAdapter(private val tracks: List<Track>) : RecyclerView.Adapter<Track
             Glide.with(itemView.context)
                 .load(track.artworkUrl100)
                 .apply(requestOptions)
+                .error(R.drawable.placeholder)
                 .into(trackImage)
+
         }
     }
 
