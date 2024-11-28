@@ -1,7 +1,6 @@
 package com.example.playlistmaker
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,8 +10,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
@@ -46,6 +44,7 @@ class SearchActivity : AppCompatActivity() {
         clearButton = findViewById(R.id.clearButton)
         goBackButton = findViewById(R.id.goBackButton)
 
+        searchEditText.textCursorDrawable = ContextCompat.getDrawable(this, R.drawable.custom_cursor)
 
         goBackButton.setNavigationOnClickListener { finish() }
 
@@ -54,7 +53,7 @@ class SearchActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 searchText = s.toString()
                 clearButton.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
-                filterTracks(searchText) // Фильтруем треки
+                filterTracks(searchText)
             }
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -64,7 +63,6 @@ class SearchActivity : AppCompatActivity() {
             searchEditText.text.clear()
             clearButton.visibility = View.GONE
             searchEditText.clearFocus()
-
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(searchEditText.windowToken, 0)
         }
