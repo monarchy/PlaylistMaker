@@ -21,20 +21,24 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var themeSwitch: SwitchCompat
     private lateinit var sharedPrefs: SharedPreferences
 
+    companion object {
+        private const val PREF_DARK_MODE = "dark_mode"
+    }
+
     @SuppressLint("MissingInflatedId", "QueryPermissionsNeeded", "CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         sharedPrefs = getSharedPreferences("theme_prefs", MODE_PRIVATE)
-        val isDarkMode = sharedPrefs.getBoolean("dark_mode", false)
-        setTheme(isDarkMode)
+        val isDarkMode = sharedPrefs.getBoolean("dark_mode", isSystemInDarkMode())
+        applyTheme(isDarkMode)
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_screen)
         themeSwitch = findViewById(R.id.darkThemeSwitch)
         themeSwitch.thumbTintList = ContextCompat.getColorStateList(this, R.color.switch_thumb_color)
         themeSwitch.trackTintList = ContextCompat.getColorStateList(this, R.color.switch_track_color)
         themeSwitch.isChecked = isDarkMode
         themeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            setTheme(isChecked)
+            applyTheme(isChecked)
             sharedPrefs.edit().putBoolean("dark_mode", isChecked).apply()
         }
 
@@ -83,11 +87,15 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setTheme(isDarkMode: Boolean) {
-        if (isDarkMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
+    private fun applyTheme(isDarkMode: Boolean) {
+        AppCompatDelegate.setDefaultNightMode(
+            if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        )
     }
+
+    private fun isSystemInDarkMode(): Boolean {
+        val currentMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return currentMode == Configuration.UI_MODE_NIGHT_YES
+    }
+
 }

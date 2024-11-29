@@ -11,4 +11,8 @@
     <color name="onBackgroundColor">#000000</color>
     <color name="surfaceColor">#FFFFFF</color>
     <color name="onSurfaceColor">#000000</color>
+    <color name="secondaryColor">#AEAFB4</color>
+    <color name="searchBarColor">#E6E8EB</color>
+    <color name="searchBarHintColor">#818C99</color>
+    <color name="arrow_back_light">#AEAFB4</color>
 </resources>
