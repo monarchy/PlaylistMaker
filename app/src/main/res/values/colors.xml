@@ -15,4 +15,5 @@
     <color name="searchBarColor">#E6E8EB</color>
     <color name="searchBarHintColor">#818C99</color>
     <color name="arrow_back_light">#AEAFB4</color>
+    <color name="placeholder_text">#000000</color>
 </resources>

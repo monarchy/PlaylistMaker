@@ -8,5 +8,6 @@
     <color name="secondaryColor">#FFFFFF</color>
     <color name="searchBarColor">#FFFFFF</color>
     <color name="searchBarHintColor">#121212</color>
-    <color name="arrow_back_light">#FFFFFF</color>"
+    <color name="arrow_back_light">#FFFFFF</color>
+    <color name="placeholder_text">#FFFFFF</color>
 </resources>

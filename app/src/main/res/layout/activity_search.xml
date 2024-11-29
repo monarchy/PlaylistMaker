@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,8 +16,7 @@
         app:navigationIcon="@drawable/arrow_back"
         app:title="@string/search"
         android:background="@color/backgroundColor"
-        app:navigationIconTint="?attr/colorOnBackground"
-        />
+        app:navigationIconTint="?attr/colorOnBackground" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -48,7 +46,8 @@
                 android:drawableStart="@drawable/lupa"
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/searchBarHintColor"
-                />
+                android:imeOptions="actionDone" />
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/clearButton"
                 android:layout_width="wrap_content"
@@ -63,11 +62,97 @@
         </com.google.android.material.card.MaterialCardView>
     </FrameLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/searchRecyclerView"
+    <!-- FrameLayout для отображения либо списка, либо плейсхолдера -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:padding="10dp">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="12dp">
+
+        <!-- RecyclerView для отображения треков -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp" />
+
+        <!-- Плейсхолдер для отображения сообщения -->
+        <LinearLayout
+            android:id="@+id/errorPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/errorImageView"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/placeholder_error"
+                android:contentDescription="@string/placeholder_error" />
+
+
+            <TextView
+                android:id="@+id/errorTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_error_h"
+                android:textSize="19sp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/placeholder_text" />
+
+            <TextView
+                android:id="@+id/errorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_error"
+                android:textSize="19sp"
+                android:textAlignment="center"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/placeholder_text" />
+
+            <Button
+                android:id="@+id/retryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/retry"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/placeholder_text" />
+            <TextView
+                android:id="@+id/placeholderTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/placeholder_no_results"
+                android:textColor="@color/placeholder_text"
+                android:visibility="gone"
+                android:textSize="16sp" />
+        </LinearLayout>
+        <!-- Плейсхолдер для пустого результата -->
+        <LinearLayout
+            android:id="@+id/emptyPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/placeholder_nothing_found"
+                android:contentDescription="@string/placeholder_no_results" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_no_results"
+                android:layout_marginTop="16dp"
+                android:textSize="19sp"
+                android:textColor="@color/placeholder_text" />
+        </LinearLayout>
+
+    </FrameLayout>
 </LinearLayout>
