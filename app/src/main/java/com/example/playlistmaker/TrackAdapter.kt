@@ -23,7 +23,7 @@ class TrackAdapter(private var tracks: List<Track>) : RecyclerView.Adapter<Track
         fun bind(song: Track) {
             trackName.text = song.trackName
             artistName.text = song.artistName
-            trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(song.trackTime)
+            trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(293000L)
             Glide.with(itemView.context)
                 .load(song.artworkUrl100)
                 .placeholder(R.drawable.placeholder)

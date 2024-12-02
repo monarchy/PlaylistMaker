@@ -1,6 +1,5 @@
 package com.example.playlistmaker
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
@@ -8,12 +7,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +20,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
-import okhttp3.Response
 import retrofit2.Call
 
 class SearchActivity : AppCompatActivity() {
@@ -36,6 +34,8 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var emptyPlaceholder: LinearLayout
     private var searchText: String = ""
     private val filteredTracks = ArrayList<Track>()
+    private lateinit var progressBar: ProgressBar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,13 +54,14 @@ class SearchActivity : AppCompatActivity() {
         searchEditText = findViewById(R.id.searchEditText)
         clearButton = findViewById(R.id.clearButton)
         goBackButton = findViewById(R.id.goBackButton)
-        placeholderText = findViewById(R.id.placeholderTextView)
         emptyPlaceholder = findViewById(R.id.emptyPlaceholder)
+        progressBar = findViewById(R.id.progressBar)
 
-        //Меняем цвет курсора
+
+
         searchEditText.textCursorDrawable = ContextCompat.getDrawable(this, R.drawable.custom_cursor)
 
-        //Кнопка назад
+
         goBackButton.setNavigationOnClickListener { finish() }
 
         searchEditText.addTextChangedListener(object : TextWatcher {
@@ -78,7 +79,7 @@ class SearchActivity : AppCompatActivity() {
         })
 
 
-        // Очистка текста
+
         clearButton.setOnClickListener {
             searchEditText.text.clear()
             clearButton.visibility = View.GONE
@@ -87,14 +88,13 @@ class SearchActivity : AppCompatActivity() {
             imm.hideSoftInputFromWindow(searchEditText.windowToken, 0)
         }
 
-        // Кнопка "Обновить"
+
         retryButton.setOnClickListener {
             if (searchText.isNotEmpty()) {
                 searchSongs(searchText)
             }
         }
 
-        // Восстановление текста при повороте экрана
         savedInstanceState?.let {
             searchText = it.getString("SEARCH_TEXT", "") ?: ""
             searchEditText.setText(searchText)
@@ -109,14 +109,16 @@ class SearchActivity : AppCompatActivity() {
 
     private fun searchSongs(query: String) {
         if (!isConnectedToInternet()) {
-            showErrorPlaceholder()  // Новый плейсхолдер для отсутствия интернета
+            showErrorPlaceholder()
             return
         }
+        showLoader()
         RetrofitInstance.apiService.searchSongs(query).enqueue(object : retrofit2.Callback<SearchResponse> {
             override fun onResponse(
                 call: Call<SearchResponse>,
                 response: retrofit2.Response<SearchResponse>
             ) {
+                hideLoader()
                 if (response.isSuccessful) {
                     val body = response.body()
                     val songs = body?.results ?: emptyList()
@@ -131,6 +133,7 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
+                hideLoader()
                 showErrorPlaceholder()
             }
         })
@@ -162,6 +165,17 @@ class SearchActivity : AppCompatActivity() {
         recyclerView.visibility = View.GONE
         errorPlaceHolder.visibility = View.GONE
         emptyPlaceholder.visibility = View.VISIBLE
+    }
+
+    private fun showLoader() {
+        progressBar.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
+        emptyPlaceholder.visibility = View.GONE
+        errorPlaceHolder.visibility = View.GONE
+    }
+
+    private fun hideLoader() {
+        progressBar.visibility = View.GONE
     }
 
 }
