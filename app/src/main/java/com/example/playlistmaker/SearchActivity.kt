@@ -72,7 +72,7 @@ class SearchActivity : AppCompatActivity() {
                 if (searchText.isNotEmpty()) {
                     searchSongs(searchText)
                 } else {
-                    showEmptyPlaceholder()
+                    hideResultsAndPlaceholders()
                 }
             }
             override fun afterTextChanged(s: Editable?) {}
@@ -176,6 +176,14 @@ class SearchActivity : AppCompatActivity() {
 
     private fun hideLoader() {
         progressBar.visibility = View.GONE
+    }
+    private fun hideResultsAndPlaceholders() {
+        recyclerView.visibility = View.GONE
+        errorPlaceHolder.visibility = View.GONE
+        emptyPlaceholder.visibility = View.GONE
+        progressBar.visibility = View.GONE
+        filteredTracks.clear()
+        adapter.notifyDataSetChanged()
     }
 
 }
