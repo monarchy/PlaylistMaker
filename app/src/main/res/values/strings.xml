@@ -17,6 +17,12 @@
     <string name="choose_app">Выберите приложение</string>
     <string name="agreement_url">https://yandex.ru/legal/practicum_offer/</string>
     <string name="go_next">Подробнее</string>
+    <string name="placeholder_start_search">Введите запрос</string>
+    <string name="placeholder_no_results">Ничего не нашлось</string>
+    <string name="placeholder_error_h">Проблемы со связью\n</string>
+    <string name="placeholder_error">Загрузка не удалась.\n
+        Проверьте подключение к интернету</string>
+    <string name="retry">Обновить</string>
 </resources>
 
 
