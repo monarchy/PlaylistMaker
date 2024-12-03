@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-class TrackAdapter(private val tracks: List<Track>) : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
+class TrackAdapter(private var tracks: List<Track>) : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
 
     class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val trackName: TextView = itemView.findViewById(R.id.trackName)
@@ -18,18 +20,15 @@ class TrackAdapter(private val tracks: List<Track>) : RecyclerView.Adapter<Track
         private val trackTime: TextView = itemView.findViewById(R.id.trackTime)
         private val trackImage: ImageView = itemView.findViewById(R.id.trackImage)
 
-        fun bind(track: Track) {
-            trackName.text = track.trackName
-            artistName.text = track.artistName
-            trackTime.text = track.trackTime
-
-            val requestOptions = RequestOptions().transform(RoundedCorners(2))
+        fun bind(song: Track) {
+            trackName.text = song.trackName
+            artistName.text = song.artistName
+            trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(293000L)
             Glide.with(itemView.context)
-                .load(track.artworkUrl100)
-                .apply(requestOptions)
+                .load(song.artworkUrl100)
+                .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
                 .into(trackImage)
-
         }
     }
 
@@ -42,5 +41,10 @@ class TrackAdapter(private val tracks: List<Track>) : RecyclerView.Adapter<Track
         holder.bind(tracks[position])
     }
 
-    override fun getItemCount(): Int = tracks.size
+    override fun getItemCount() = tracks.size
+
+    fun updateData(newTracks: List<Track>) {
+        tracks = newTracks
+        notifyDataSetChanged()
+    }
 }
