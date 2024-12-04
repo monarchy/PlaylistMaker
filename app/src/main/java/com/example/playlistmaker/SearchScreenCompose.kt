@@ -20,23 +20,33 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -49,8 +59,7 @@ import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
-
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun SearchScreen(
     searchText: String,
@@ -60,55 +69,90 @@ fun SearchScreen(
     isError: Boolean,
     isEmpty: Boolean,
     filteredTracks: List<Track>,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onBackPressed: () -> Unit,
+
+
 ) {
-    Column(
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxSize()
-            .background(color = colorResource(R.color.backgroundColor))
+    var selectedTab by remember { mutableIntStateOf(0) }
 
-    ) {
-        TopAppBar(
-            title = { Text(text = stringResource(R.string.search)) },
-            navigationIcon = {
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.arrow_back),
-                        contentDescription = "Back"
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            TopAppBar(
+
+                title = { Text(text = stringResource(R.string.search), color = colorResource(R.color.placeholder_text)) },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = colorResource(R.color.backgroundColor))
+            )
+        },
+        bottomBar = {
+            BottomAppBar(
+                horizontalArrangement = BottomAppBarDefaults.HorizontalArrangement,
+                containerColor = colorResource(R.color.backgroundColor),
+                content = {
+                    BottomBarItem(
+                        icon = painterResource(id = R.drawable.search_button),
+                        label = stringResource(R.string.search),
+                        selected = selectedTab == 0,
+                        onClick = { selectedTab = 0 }
                     )
-                }
-            }
-        )
+                    BottomBarItem(
+                        icon =  painterResource(id = R.drawable.mediateka),
+                        label = stringResource(R.string.media),
+                        selected = selectedTab == 1,
+                        onClick = { selectedTab = 1 }
+                    )
+                    BottomBarItem(
+                        icon =  painterResource(id = R.drawable.settings),
+                        label = stringResource(R.string.settings),
+                        selected = selectedTab == 2,
+                        onClick = { selectedTab = 2 }
+                    )
+                })
+        }
 
-        SearchBar(
-            searchText = searchText,
-            onSearchTextChanged = onSearchTextChanged,
-            onSearch = onSearch
-        )
+    ) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = colorResource(R.color.backgroundColor))
+            ) {
+                SearchBar(
+                    searchText = searchText,
+                    onSearchTextChanged = onSearchTextChanged,
+                    onSearch = onSearch,
+                    onCleanPressed = {
+                        onSearchTextChanged("")
+                        onSearch("")
+                    }
+                )
 
-        when {
-            isLoading -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator ()
+                if (isLoading) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
                 }
-            }
-            isError -> ErrorPlaceholder(onRetry = onRetry)
-            isEmpty -> EmptyPlaceholder()
-            else -> {
-                if (filteredTracks.isNotEmpty()) {
-                    TrackList(tracks = filteredTracks)
+
+                if (isError) {
+                    ErrorPlaceholder(onRetry = onRetry)
+                } else if (isEmpty) {
+                    EmptyPlaceholder()
+                } else {
+                    if (filteredTracks.isNotEmpty()) {
+                        TrackList(tracks = filteredTracks)
+                    }
                 }
             }
         }
     }
 }
 
+
 @Composable
 fun SearchBar(
     searchText: String,
     onSearchTextChanged: (String) -> Unit,
-    onSearch: (String) -> Unit
+    onSearch: (String) -> Unit,
+    onCleanPressed:() -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -119,13 +163,14 @@ fun SearchBar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .height(42.dp)
+                .padding(start = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.search_button),
                 contentDescription = null,
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(16.dp),
                 tint = Color.Gray
             )
             BasicTextField(
@@ -133,13 +178,31 @@ fun SearchBar(
                 onValueChange = onSearchTextChanged,
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 8.dp),
+                    .padding(start = 16.dp),
                 textStyle = LocalTextStyle.current.copy(color = Color.Black),
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(
                     onDone = { onSearch(searchText) }
-                )
+                ),
+                singleLine = true
+
             )
+            if (searchText.isNotEmpty()) {
+                IconButton(
+                    onClick = { onCleanPressed() }
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.cross),
+                        contentDescription = "Clear",
+                        modifier = Modifier
+                            .size(16.dp),
+                        tint = Color.Gray
+                    )
+                }
+            }
+            else {
+                Spacer(modifier = Modifier.size(16.dp))
+        }
         }
     }
 }
@@ -211,7 +274,7 @@ fun TrackItem(track: Track) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         GlideImage(
             model = track.artworkUrl100,
@@ -272,8 +335,36 @@ fun DefaultPreview() {
             onSearch = {},
             isLoading = false,
             isError = false,
-            isEmpty = true,
+            isEmpty = false,
             filteredTracks = emptyList(),
-            onRetry = {}
+            onRetry = {},
+            onBackPressed = {}
         )
     }
+
+@Composable
+fun BottomBarItem(
+    icon: Painter,
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(8.dp)
+    ) {
+        Icon(
+            painter = icon,
+            contentDescription = label,
+            tint = if (selected) Color.Blue else colorResource(R.color.placeholder_text),
+            modifier = Modifier.size(24.dp)
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = label,
+            color = if (selected) Color.Blue else colorResource(R.color.placeholder_text),
+        )
+    }
+}
+

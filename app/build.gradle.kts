@@ -44,6 +44,9 @@ composeCompiler {
 
 
 dependencies {
+    val nav_version = "2.8.4"
+
+    implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation(libs.androidx.ui.test.android)
     val composeBom = platform("androidx.compose:compose-bom:2024.10.01")
     implementation(composeBom)
@@ -53,6 +56,9 @@ dependencies {
     // Material Design 3
     implementation(libs.androidx.compose.material3.material32)
     implementation(libs.androidx.compose.ui.ui2)
+    implementation("androidx.compose.material3:material3:1.3.1")
+    implementation("androidx.compose.material3:material3-window-size-class:1.3.1")
+    implementation("androidx.compose.material3:material3-adaptive-navigation-suite:1.4.0-alpha04")
 
     // Android Studio Preview support
     implementation(libs.androidx.compose.ui.ui.tooling.preview)

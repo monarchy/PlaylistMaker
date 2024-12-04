@@ -6,9 +6,9 @@ import android.net.NetworkInfo
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import retrofit2.Call
 
@@ -22,7 +22,6 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Устанавливаем Compose как основной UI
         setContent {
             SearchScreen(
                 searchText = searchText,
@@ -32,7 +31,8 @@ class SearchActivity : AppCompatActivity() {
                 isError = isError,
                 isEmpty = isEmpty,
                 filteredTracks = filteredTracks,
-                onRetry = { searchSongs(searchText) }
+                onRetry = { searchSongs(searchText) },
+                onBackPressed = { finish() }
             )
         }
     }
