@@ -93,6 +93,7 @@ class SearchActivity : AppCompatActivity() {
                 } else if (searchEditText.hasFocus()) {
                     showHistory()
                     cleanHistoryButton.visibility = if (searchHistoryAdapter.getHistory().isNotEmpty()) View.VISIBLE else View.GONE
+                    youSearched.visibility = if (searchHistoryAdapter.getHistory().isNotEmpty()) View.VISIBLE else View.GONE
                 } else {
                     hideSearchHistory()
                 }
@@ -234,7 +235,6 @@ class SearchActivity : AppCompatActivity() {
         cleanHistoryButton.visibility = View.GONE
         youSearched.visibility = View.GONE
     }
-
 }
 
 
