@@ -32,20 +32,27 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var errorPlaceHolder: LinearLayout
     private lateinit var retryButton: Button
     private lateinit var emptyPlaceholder: LinearLayout
+    private lateinit var youSearched: TextView
+    private lateinit var cleanHistoryButton: Button
     private var searchText: String = ""
     private val filteredTracks = ArrayList<Track>()
     private lateinit var progressBar: ProgressBar
+    private lateinit var searchHistoryAdapter: SearchHistoryAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         enableEdgeToEdge()
+        searchHistoryAdapter = SearchHistoryAdapter(this)
 
         //RV
         recyclerView = findViewById(R.id.searchRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = TrackAdapter(filteredTracks)
+        adapter = TrackAdapter(filteredTracks){ track ->
+            searchHistoryAdapter.addTrack(track)
+            // TODO: Переход на экран плеера
+        }
         recyclerView.adapter = adapter
         //Плейсхолдер с ошибкой и кнопкой
         errorPlaceHolder = findViewById(R.id.errorPlaceholder)
@@ -56,30 +63,53 @@ class SearchActivity : AppCompatActivity() {
         goBackButton = findViewById(R.id.goBackButton)
         emptyPlaceholder = findViewById(R.id.emptyPlaceholder)
         progressBar = findViewById(R.id.progressBar)
-
-
+        youSearched = findViewById(R.id.you_searched_text)
+        cleanHistoryButton = findViewById(R.id.cleanHistoryButton)
 
         searchEditText.textCursorDrawable = ContextCompat.getDrawable(this, R.drawable.custom_cursor)
 
 
         goBackButton.setNavigationOnClickListener { finish() }
 
+        searchEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus && searchEditText.text.isEmpty() && searchHistoryAdapter.getHistory().isNotEmpty()) {
+                showHistory()
+            } else {
+                hideSearchHistory()
+            }
+        }
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 searchText = s.toString()
+
                 clearButton.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
+
                 if (searchText.isNotEmpty()) {
+                    cleanHistoryButton.visibility = View.GONE
+                    youSearched.visibility = View.GONE
                     searchSongs(searchText)
+                } else if (searchEditText.hasFocus()) {
+                    showHistory()
+                    cleanHistoryButton.visibility = if (searchHistoryAdapter.getHistory().isNotEmpty()) View.VISIBLE else View.GONE
                 } else {
-                    hideResultsAndPlaceholders()
+                    hideSearchHistory()
                 }
             }
             override fun afterTextChanged(s: Editable?) {}
         })
 
-
-
+        cleanHistoryButton.setOnClickListener {
+            searchEditText.text.clear()
+            youSearched.visibility = View.GONE
+            searchEditText.clearFocus()
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(searchEditText.windowToken, 0)
+            searchHistoryAdapter.clearHistory()
+            filteredTracks.clear()
+            adapter.notifyDataSetChanged()
+        }
         clearButton.setOnClickListener {
             searchEditText.text.clear()
             clearButton.visibility = View.GONE
@@ -185,8 +215,30 @@ class SearchActivity : AppCompatActivity() {
         filteredTracks.clear()
         adapter.notifyDataSetChanged()
     }
+    private fun showHistory() {
+        val history = searchHistoryAdapter.getHistory()
+        if (history.isEmpty()) {
+            showEmptyPlaceholder()
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            errorPlaceHolder.visibility = View.GONE
+            emptyPlaceholder.visibility = View.GONE
+            progressBar.visibility = View.GONE
+            youSearched.visibility = View.VISIBLE
+            cleanHistoryButton.visibility = View.VISIBLE
+            adapter.bindHistory(history)
+        }
+    }
+    private fun hideSearchHistory() {
+        recyclerView.visibility = View.GONE
+        cleanHistoryButton.visibility = View.GONE
+        youSearched.visibility = View.GONE
+    }
 
 }
+
+
+
 
 
 

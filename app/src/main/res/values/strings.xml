@@ -23,6 +23,9 @@
     <string name="placeholder_error">Загрузка не удалась.\n
         Проверьте подключение к интернету</string>
     <string name="retry">Обновить</string>
+    <string name="you_searched">Вы искали</string>
+    <string name="clean_history">Очистить историю</string>
+
 </resources>
 
 
