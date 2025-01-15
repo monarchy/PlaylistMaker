@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -86,11 +87,7 @@ class SearchActivity : AppCompatActivity() {
 
                 clearButton.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
 
-                if (searchText.isNotEmpty()) {
-                    cleanHistoryButton.visibility = View.GONE
-                    youSearched.visibility = View.GONE
-                    searchSongs(searchText)
-                } else if (searchEditText.hasFocus()) {
+                if (searchText.isEmpty() && searchEditText.hasFocus()) {
                     showHistory()
                     cleanHistoryButton.visibility = if (searchHistoryAdapter.getHistory().isNotEmpty()) View.VISIBLE else View.GONE
                     youSearched.visibility = if (searchHistoryAdapter.getHistory().isNotEmpty()) View.VISIBLE else View.GONE
@@ -98,8 +95,22 @@ class SearchActivity : AppCompatActivity() {
                     hideSearchHistory()
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        searchEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (searchText.isNotEmpty()) {
+                    searchSongs(searchText)
+                    cleanHistoryButton.visibility = View.GONE
+                    youSearched.visibility = View.GONE
+                }
+                true
+            } else {
+                false
+            }
+        }
 
         cleanHistoryButton.setOnClickListener {
             searchEditText.text.clear()

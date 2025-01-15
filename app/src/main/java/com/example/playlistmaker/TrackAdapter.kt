@@ -27,14 +27,25 @@ class TrackAdapter(private var tracks: MutableList<Track>, private val onTrackCl
         private val trackImage: ImageView = itemView.findViewById(R.id.trackImage)
 
         fun bind(song: Track) {
+
             trackName.text = song.trackName
             artistName.text = song.artistName
             trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(293000L)
-            Glide.with(itemView.context)
-                .load(song.artworkUrl100)
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder)
-                .into(trackImage)
+
+            if (!song.artworkUrl100.isNullOrEmpty()){
+                Glide.with(itemView.context)
+                    .load(song.artworkUrl100)
+                    .placeholder(R.drawable.placeholder)
+                    .into(trackImage)
+
+            }
+            else
+            {
+                Glide.with(itemView.context)
+                    .load(R.drawable.placeholder)
+                    .into(trackImage)
+            }
+
         }
     }
 
