@@ -7,12 +7,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class TrackAdapter(private var tracks: List<Track>) : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
+class TrackAdapter(private var tracks: MutableList<Track>, private val onTrackClick: (Track) -> Unit) : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
+    var isHistory: Boolean = false
+
+    fun bindHistory(history: List<Track>) {
+        isHistory = true
+        tracks.clear()
+        tracks.addAll(history)
+        notifyDataSetChanged()
+    }
 
     class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val trackName: TextView = itemView.findViewById(R.id.trackName)
@@ -21,14 +27,25 @@ class TrackAdapter(private var tracks: List<Track>) : RecyclerView.Adapter<Track
         private val trackImage: ImageView = itemView.findViewById(R.id.trackImage)
 
         fun bind(song: Track) {
+
             trackName.text = song.trackName
             artistName.text = song.artistName
             trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(293000L)
-            Glide.with(itemView.context)
-                .load(song.artworkUrl100)
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder)
-                .into(trackImage)
+
+            if (!song.artworkUrl100.isNullOrEmpty()){
+                Glide.with(itemView.context)
+                    .load(song.artworkUrl100)
+                    .placeholder(R.drawable.placeholder)
+                    .into(trackImage)
+
+            }
+            else
+            {
+                Glide.with(itemView.context)
+                    .load(R.drawable.placeholder)
+                    .into(trackImage)
+            }
+
         }
     }
 
@@ -38,13 +55,13 @@ class TrackAdapter(private var tracks: List<Track>) : RecyclerView.Adapter<Track
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        holder.bind(tracks[position])
+        val track = tracks[position]
+        holder.bind(track)
+        holder.itemView.setOnClickListener {
+            onTrackClick(track)
+        }
     }
 
     override fun getItemCount() = tracks.size
 
-    fun updateData(newTracks: List<Track>) {
-        tracks = newTracks
-        notifyDataSetChanged()
-    }
 }
