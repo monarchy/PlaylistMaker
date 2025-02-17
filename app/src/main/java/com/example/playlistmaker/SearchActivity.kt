@@ -53,6 +53,7 @@ class SearchActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = TrackAdapter(filteredTracks) { track ->
             searchHistoryAdapter.addTrack(track)
+                //Log.d("click", "$track.trackTime")
             val intentAudioPlayerActivity = Intent(this, AudioPlayerActivity::class.java).apply {
                 putExtra(Constants.TRACK_ID, track.trackId)
                 putExtra(Constants.TRACK_NAME, track.trackName)
@@ -61,7 +62,7 @@ class SearchActivity : AppCompatActivity() {
                 putExtra(Constants.RELEASE_DATE, track.releaseDate)
                 putExtra(Constants.PRIMARY_GENRE_NAME, track.primaryGenreName)
                 putExtra(Constants.COUNTRY, track.country)
-                putExtra(Constants.TRACK_TIME_MILLIS, track.trackTime)
+                putExtra(Constants.TRACK_TIME_MILLIS, track.trackTimeMillis)
                 putExtra(Constants.ART_WORK_URL, track.artworkUrl100)
             }
             startActivity(intentAudioPlayerActivity)

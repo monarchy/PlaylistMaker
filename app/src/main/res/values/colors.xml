@@ -21,4 +21,6 @@
     <color name="roundButton">#401A1B22</color>
     <color name="arrowBack">#1A1B22</color>
     <color name="updateText">#FFFFFFFF</color>
+    <color name="play_button">#1A1B22</color>
+    <color name="player_text_color">#AEAFB4</color>
 </resources>

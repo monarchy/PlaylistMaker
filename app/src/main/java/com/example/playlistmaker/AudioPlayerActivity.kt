@@ -48,7 +48,7 @@ class AudioPlayerActivity : AppCompatActivity() {
             trackId = trackId,
             trackName = trackName ?: "",
             artistName = artistName ?: "",
-            trackTime = trackTimeMillis,
+            trackTimeMillis = trackTimeMillis,
             artworkUrl100 = artworkUrl100 ?: "",
             collectionName = collectionName ?: "",
             releaseDate = releaseDate ?: "",
@@ -61,7 +61,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.trackName).text = track.trackName
         findViewById<TextView>(R.id.artistName).text = track.artistName
         val dateFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
-        val formattedTime = dateFormat.format(track.trackTime)
+        val formattedTime = dateFormat.format(track.trackTimeMillis)
         findViewById<TextView>(R.id.trackTime).text = formattedTime
 
         val collectionNameView = findViewById<TextView>(R.id.collectionName)
