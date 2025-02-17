@@ -28,11 +28,12 @@
     <string name="track_name">Название трека</string>
     <string name="track_artist">Исполнитель</string>
     <string name="track_time">0:44</string>
-    <string name="track_durability">Длительность</string>
-    <string name="track_album_text">Альбом</string>
-    <string name="track_year_text">Год</string>
-    <string name="track_genre_text">Жанр\n</string>
-    <string name="track_country_text">Страна</string>
+    <string name="duration">Длительность</string>
+    <string name="album">Альбом</string>
+    <string name="year">Год</string>
+    <string name="style">Жанр</string>
+    <string name="country">Страна</string>
+    <string name="timer">00:00</string>
 </resources>
 
 
