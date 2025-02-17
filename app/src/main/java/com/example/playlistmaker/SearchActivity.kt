@@ -1,6 +1,7 @@
 package com.example.playlistmaker
 
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
@@ -50,9 +51,21 @@ class SearchActivity : AppCompatActivity() {
         //RV
         recyclerView = findViewById(R.id.searchRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = TrackAdapter(filteredTracks){ track ->
+        adapter = TrackAdapter(filteredTracks) { track ->
             searchHistoryAdapter.addTrack(track)
-            // TODO: Переход на экран плеера
+                //Log.d("click", "$track.trackTime")
+            val intentAudioPlayerActivity = Intent(this, AudioPlayerActivity::class.java).apply {
+                putExtra(Constants.TRACK_ID, track.trackId)
+                putExtra(Constants.TRACK_NAME, track.trackName)
+                putExtra(Constants.ARTIST_NAME, track.artistName)
+                putExtra(Constants.COLLECTION_NAME, track.collectionName)
+                putExtra(Constants.RELEASE_DATE, track.releaseDate)
+                putExtra(Constants.PRIMARY_GENRE_NAME, track.primaryGenreName)
+                putExtra(Constants.COUNTRY, track.country)
+                putExtra(Constants.TRACK_TIME_MILLIS, track.trackTimeMillis)
+                putExtra(Constants.ART_WORK_URL, track.artworkUrl100)
+            }
+            startActivity(intentAudioPlayerActivity)
         }
         recyclerView.adapter = adapter
         //Плейсхолдер с ошибкой и кнопкой

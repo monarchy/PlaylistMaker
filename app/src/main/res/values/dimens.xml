@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="padding">16dp</dimen>
     <dimen name="text_size">22sp</dimen>
     <dimen name="small_text_size">16sp</dimen>
     <dimen name="standard_padding">16dp</dimen>
+    <dimen name="iconSize">24dp</dimen>
+    <dimen name="iconPadding">8dp</dimen>
+    <dimen name="smallPadding">4dp</dimen>
+    <dimen name="dimenSize">48dp</dimen>
+    <dimen name="imagePadding">12dp</dimen>
+    <dimen name="textPadding">21dp</dimen>
+    <dimen name="imageSmallButtonDimen">51dp</dimen>
+    <dimen name="imageBigButtonDimen">100dp</dimen>
+    <dimen name="progressBar">44dp</dimen>
 </resources>

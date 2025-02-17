@@ -30,7 +30,7 @@ class TrackAdapter(private var tracks: MutableList<Track>, private val onTrackCl
 
             trackName.text = song.trackName
             artistName.text = song.artistName
-            trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(293000L)
+            trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(song.trackTimeMillis)
 
             if (!song.artworkUrl100.isNullOrEmpty()){
                 Glide.with(itemView.context)
