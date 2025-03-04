@@ -3,6 +3,8 @@ package com.example.playlistmaker
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageButton
@@ -21,13 +23,16 @@ class AudioPlayerActivity : AppCompatActivity() {
         private const val STATE_PREPARED = 1
         private const val STATE_PLAYING = 2
         private const val STATE_PAUSED = 3
+        private const val UPDATE_TIME = 300L
     }
 
     private var playerState = STATE_DEFAULT
     private lateinit var buttonBack: ImageView
     private lateinit var playButton : ImageButton
+    private lateinit var timePlay: TextView
     private var previewUrl: String? = null
     private var mediaPlayer: MediaPlayer? = null
+    private val handler = Handler(Looper.getMainLooper())
 
     private fun dpToPx(dp: Float, context: Context): Int {
         return TypedValue.applyDimension(
@@ -49,6 +54,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         playButton.setOnClickListener {
             playbackControl()
         }
+        timePlay = findViewById(R.id.timePlay)
         val trackId = intent.getIntExtra(Constants.TRACK_ID, 0)
         val trackName = intent.getStringExtra(Constants.TRACK_NAME)
         val artistName = intent.getStringExtra(Constants.ARTIST_NAME)
@@ -116,20 +122,38 @@ class AudioPlayerActivity : AppCompatActivity() {
                 }
                 setOnCompletionListener {
                     playerState = STATE_PREPARED
+                    handler.removeCallbacks(updatingTime)
+                    timePlay.setText(R.string.timer)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
+    private val updatingTime = object : Runnable {
+        override fun run() {
+            if (playerState == STATE_PLAYING) {
+                timePlay.text =
+                    SimpleDateFormat(
+                        "mm:ss",
+                        Locale.getDefault()
+                    ).format(mediaPlayer?.currentPosition)
+                handler.postDelayed(this, UPDATE_TIME)
+            }
+        }
+    }
     private fun startPlayer() {
         mediaPlayer?.start()
         playerState = STATE_PLAYING
+        playButton.setImageResource(R.drawable.pause)
+        handler.post(updatingTime)
     }
 
     private fun pausePlayer() {
         mediaPlayer?.pause()
         playerState = STATE_PAUSED
+        playButton.setImageResource(R.drawable.play_button)
+        handler.removeCallbacks(updatingTime)
     }
     private fun playbackControl() {
         when(playerState) {
@@ -144,10 +168,12 @@ class AudioPlayerActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         pausePlayer()
+        handler.removeCallbacks(updatingTime)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayer?.release()
+        handler.removeCallbacks(updatingTime)
     }
 }
