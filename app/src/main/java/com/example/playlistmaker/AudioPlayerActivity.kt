@@ -123,6 +123,7 @@ class AudioPlayerActivity : AppCompatActivity() {
                 setOnCompletionListener {
                     playerState = STATE_PREPARED
                     handler.removeCallbacks(updatingTime)
+                    playButton.setImageResource(R.drawable.play_button)
                     timePlay.setText(R.string.timer)
                 }
             } catch (e: Exception) {
