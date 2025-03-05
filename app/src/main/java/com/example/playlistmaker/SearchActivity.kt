@@ -1,10 +1,11 @@
 package com.example.playlistmaker
 
-import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
+import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -23,8 +24,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SearchActivity : AppCompatActivity() {
+    companion object{
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+    }
     private lateinit var searchEditText: EditText
     private lateinit var clearButton: ImageView
     private lateinit var goBackButton: MaterialToolbar
@@ -40,6 +47,10 @@ class SearchActivity : AppCompatActivity() {
     private val filteredTracks = ArrayList<Track>()
     private lateinit var progressBar: ProgressBar
     private lateinit var searchHistoryAdapter: SearchHistoryAdapter
+    private var currentSearchText: String = ""
+
+    private val handler = Handler(Looper.getMainLooper())
+    private var isClickAllowed = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,21 +63,23 @@ class SearchActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.searchRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = TrackAdapter(filteredTracks) { track ->
-            searchHistoryAdapter.addTrack(track)
-                //Log.d("click", "$track.trackTime")
-            val intentAudioPlayerActivity = Intent(this, AudioPlayerActivity::class.java).apply {
-                putExtra(Constants.TRACK_ID, track.trackId)
-                putExtra(Constants.TRACK_NAME, track.trackName)
-                putExtra(Constants.ARTIST_NAME, track.artistName)
-                putExtra(Constants.COLLECTION_NAME, track.collectionName)
-                putExtra(Constants.RELEASE_DATE, track.releaseDate)
-                putExtra(Constants.PRIMARY_GENRE_NAME, track.primaryGenreName)
-                putExtra(Constants.COUNTRY, track.country)
-                putExtra(Constants.TRACK_TIME_MILLIS, track.trackTimeMillis)
-                putExtra(Constants.ART_WORK_URL, track.artworkUrl100)
-            }
-            startActivity(intentAudioPlayerActivity)
+            if (clickDebounce()) {
+                searchHistoryAdapter.addTrack(track)
+                val intentAudioPlayerActivity = Intent(this, AudioPlayerActivity::class.java).apply {
+                    putExtra(Constants.TRACK_ID, track.trackId)
+                    putExtra(Constants.TRACK_NAME, track.trackName)
+                    putExtra(Constants.ARTIST_NAME, track.artistName)
+                    putExtra(Constants.COLLECTION_NAME, track.collectionName)
+                    putExtra(Constants.RELEASE_DATE, track.releaseDate)
+                    putExtra(Constants.PRIMARY_GENRE_NAME, track.primaryGenreName)
+                    putExtra(Constants.COUNTRY, track.country)
+                    putExtra(Constants.TRACK_TIME_MILLIS, track.trackTimeMillis)
+                    putExtra(Constants.ART_WORK_URL, track.artworkUrl100)
+                    putExtra(Constants.PREVIEW_URL, track.previewUrl)
+                }
+                startActivity(intentAudioPlayerActivity)
         }
+            }
         recyclerView.adapter = adapter
         //Плейсхолдер с ошибкой и кнопкой
         errorPlaceHolder = findViewById(R.id.errorPlaceholder)
@@ -97,8 +110,10 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 searchText = s.toString()
+                currentSearchText = searchText
 
                 clearButton.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
+                searchDebounce()
 
                 if (searchText.isEmpty() && searchEditText.hasFocus()) {
                     showHistory()
@@ -168,10 +183,10 @@ class SearchActivity : AppCompatActivity() {
             return
         }
         showLoader()
-        RetrofitInstance.apiService.searchSongs(query).enqueue(object : retrofit2.Callback<SearchResponse> {
+        RetrofitInstance.apiService.searchSongs(query).enqueue(object : Callback<SearchResponse> {
             override fun onResponse(
                 call: Call<SearchResponse>,
-                response: retrofit2.Response<SearchResponse>
+                response: Response<SearchResponse>
             ) {
                 hideLoader()
                 if (response.isSuccessful) {
@@ -195,9 +210,14 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun isConnectedToInternet(): Boolean {
-        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork : NetworkInfo? = connectivityManager.activeNetworkInfo
-        return activeNetwork?.isConnected == true
+        val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+
+        return when {
+            activeNetwork.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) -> true
+            else -> false
+        }
     }
 
     private fun showResults(songs: List<Track>) {
@@ -259,7 +279,25 @@ class SearchActivity : AppCompatActivity() {
         cleanHistoryButton.visibility = View.GONE
         youSearched.visibility = View.GONE
     }
-}
+    private fun clickDebounce(): Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
+    }
+
+    private fun searchDebounce() {
+        if (searchText.isEmpty()){
+            return
+        }
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+    }
+    private val searchRunnable = Runnable { searchSongs(query = currentSearchText) }
+     }
+
 
 
 

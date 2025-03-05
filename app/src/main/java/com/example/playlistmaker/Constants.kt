@@ -10,4 +10,6 @@ object Constants {
     const val COUNTRY = "COUNTRY"
     const val TRACK_TIME_MILLIS = "TRACK_TIME_MILLIS"
     const val ART_WORK_URL = "ART_WORK_URL"
+    const val PREVIEW_URL = "PREVIEW_URL"
+    const val CLICK_DEBOUNCE_DELAY = 1000L
 }

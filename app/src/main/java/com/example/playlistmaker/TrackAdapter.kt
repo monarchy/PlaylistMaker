@@ -1,5 +1,7 @@
 package com.example.playlistmaker
 
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,11 +9,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.playlistmaker.Constants.CLICK_DEBOUNCE_DELAY
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class TrackAdapter(private var tracks: MutableList<Track>, private val onTrackClick: (Track) -> Unit) : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
     var isHistory: Boolean = false
+    private val clickHandler = Handler(Looper.getMainLooper())
+    private val clickRunnable = Runnable {}
+    private var isClickAllowed = true
 
     fun bindHistory(history: List<Track>) {
         isHistory = true
@@ -58,10 +64,13 @@ class TrackAdapter(private var tracks: MutableList<Track>, private val onTrackCl
         val track = tracks[position]
         holder.bind(track)
         holder.itemView.setOnClickListener {
-            onTrackClick(track)
+            if (isClickAllowed) {
+                isClickAllowed = false
+                clickHandler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+                onTrackClick(track)
+            }
         }
+
     }
-
     override fun getItemCount() = tracks.size
-
 }
