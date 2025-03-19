@@ -3,6 +3,7 @@ package com.example.playlistmaker.ui.search
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -30,6 +31,9 @@ import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class SearchActivity : AppCompatActivity() {
 
@@ -167,41 +171,53 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private val searchRunnable = Runnable { search() }
-
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
     private fun search() {
         if (inputEditText.text.isNotEmpty()) {
-            progressBar.visibility = View.VISIBLE
+            if (isNetworkAvailable()) {
+                progressBar.visibility = View.VISIBLE
 
-            trackInteractor.search(
-                inputEditText.text.toString(),
-                object : TrackInteractor.TrackConsumer {
-                    override fun consume(data: List<Track>?) {
-                        handler.post {
-                            progressBar.visibility = View.GONE
-                            tracks.clear()
+                trackInteractor.search(
+                    inputEditText.text.toString(),
+                    object : TrackInteractor.TrackConsumer {
+                        override fun consume(data: List<Track>?) {
+                            handler.post {
+                                progressBar.visibility = View.GONE
+                                tracks.clear()
 
-                            if (!data.isNullOrEmpty()) {
-                                tracks.addAll(data)
-                                showTracks()
-                                updateUI(isEmpty = false, isError = false)
-                            } else {
-                                updateUI(isEmpty = true, isError = false)
+                                if (!data.isNullOrEmpty()) {
+                                    tracks.addAll(data)
+                                    showTracks()
+                                    updateUI(isEmpty = false, isError = false)
+                                } else {
+                                    updateUI(isEmpty = true, isError = false)
+                                }
                             }
                         }
-                    }
 
-                    override fun onError(error: Throwable) {
-                        handler.post {
-                            progressBar.visibility = View.GONE
-                            updateUI(isEmpty = false, isError = true)
-                            Log.e("SearchActivity", "Error during search: ${error.message}")
+                        override fun onError(error: Throwable) {
+                            handler.post {
+                                progressBar.visibility = View.GONE
+                                if (error is SocketTimeoutException || error is UnknownHostException || error is ConnectException) {
+                                    updateUI(isEmpty = false, isError = true, isNetworkError = true)
+                                } else {
+                                    updateUI(isEmpty = false, isError = true, isNetworkError = false)
+                                }
+                                Log.e("SearchActivity", "Error during search: ${error.message}")
+                            }
                         }
-                    }
-                })
+                    })
+            } else {
+                updateUI(isEmpty = false, isError = true, isNetworkError = true)
+            }
         }
     }
 
-    private fun updateUI(isEmpty: Boolean, isError: Boolean) {
+    private fun updateUI(isEmpty: Boolean, isError: Boolean, isNetworkError: Boolean = false) {
         handler.post {
             if (isEmpty) {
                 placeholderImage.setImageResource(R.drawable.placeholder_nothing_found)
@@ -211,12 +227,21 @@ class SearchActivity : AppCompatActivity() {
                 cleanSearchButton.visibility = View.GONE
                 showMessage(getString(R.string.placeholder_no_results), "")
             } else if (isError) {
-                placeholderImage.setImageResource(R.drawable.placeholder_error)
-                placeholderImage.visibility = View.VISIBLE
-                updateButton.visibility = View.VISIBLE
-                textSearch.visibility = View.GONE
-                cleanSearchButton.visibility = View.GONE
-                showMessage(getString(R.string.placeholder_error), "")
+                if (isNetworkError) {
+                    placeholderImage.setImageResource(R.drawable.placeholder_error)
+                    placeholderImage.visibility = View.VISIBLE
+                    updateButton.visibility = View.VISIBLE
+                    textSearch.visibility = View.GONE
+                    cleanSearchButton.visibility = View.GONE
+                    showMessage(getString(R.string.placeholder_error), "")
+                } else {
+                    placeholderImage.setImageResource(R.drawable.placeholder_error)
+                    placeholderImage.visibility = View.VISIBLE
+                    updateButton.visibility = View.VISIBLE
+                    textSearch.visibility = View.GONE
+                    cleanSearchButton.visibility = View.GONE
+                    showMessage(getString(R.string.placeholder_error), "")
+                }
             } else {
                 placeholderImage.visibility = View.GONE
                 updateButton.visibility = View.GONE
