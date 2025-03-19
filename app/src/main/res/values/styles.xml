@@ -70,4 +70,16 @@
         <item name="android:background">@color/white</item>
     </style>
 
+    <style name="TopText">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/textSize</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="ArrowBack">
+        <item name="tint">@color/black</item>
+    </style>
+
 </resources>

@@ -15,17 +15,17 @@
         android:theme="@style/Theme.MyApp"
         tools:targetApi="31">
         <activity
-            android:name=".AudioPlayerActivity"
+            android:name=".ui.audioplayer.AudioPlayerActivity"
             android:exported="false"
             tools:ignore="Instantiatable" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".ui.search.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".MediatekaActivity"
+            android:name=".ui.mediateka.MediatekaActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.settings.SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
