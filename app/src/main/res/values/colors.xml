@@ -23,4 +23,9 @@
     <color name="updateText">#FFFFFFFF</color>
     <color name="play_button">#1A1B22</color>
     <color name="player_text_color">#AEAFB4</color>
+    <color name="editTextTint">#E6E8EB</color>
+    <color name="textColorHint">#AEAFB4</color>
+    <color name="drawableTint">#AEAFB4</color>
+    <color name="placeholderColor">#1A1B22</color>
+    <color name="updateBackground">#1A1B22</color>
 </resources>
