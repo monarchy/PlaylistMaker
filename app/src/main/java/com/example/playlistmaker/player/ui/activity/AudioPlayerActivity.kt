@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -13,14 +14,13 @@ import com.example.playlistmaker.player.ui.viewmodel.AudioPlayerState
 import com.example.playlistmaker.player.ui.viewmodel.AudioPlayerViewModel
 import com.example.playlistmaker.search.domain.models.Track
 import com.example.playlistmaker.util.Constants
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AudioPlayerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAudioPlayerBinding
-    private val viewModel by viewModel<AudioPlayerViewModel>()
+    private val viewModel: AudioPlayerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,15 +72,13 @@ class AudioPlayerActivity : AppCompatActivity() {
         binding.trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault())
             .format(track.trackTimeMillis)
 
-        track.collectionName?.let {
-            if (it.isEmpty()) {
-                binding.collectionName.visibility = View.GONE
-            } else {
-                binding.collectionName.text = track.collectionName
-            }
+        if (track.collectionName.isEmpty()) {
+            binding.collectionName.visibility = View.GONE
+        } else {
+            binding.collectionName.text = track.collectionName
         }
 
-        val year = track.releaseDate?.substring(0, 4)
+        val year = track.releaseDate.substring(0, 4)
         binding.releaseDate.text = year
 
         binding.primaryGenreName.text = track.primaryGenreName

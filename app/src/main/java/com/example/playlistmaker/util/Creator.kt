@@ -1,18 +1,21 @@
 package com.example.playlistmaker.util
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.playlistmaker.main.data.impl.InternalNavigationImpl
+import com.example.playlistmaker.main.domain.impl.InternalNavigation
 import com.example.playlistmaker.search.data.ResourcesProviderImpl
 import com.example.playlistmaker.search.data.SearchHistoryRepositoryImpl
 import com.example.playlistmaker.search.data.TrackRepositoryImpl
 import com.example.playlistmaker.search.data.network.PlaylistApi
+import com.example.playlistmaker.search.data.network.RetrofitNetworkService
 import com.example.playlistmaker.search.domain.api.SearchHistoryInteractor
 import com.example.playlistmaker.search.domain.api.SearchHistoryRepository
 import com.example.playlistmaker.search.domain.api.TrackInteractor
 import com.example.playlistmaker.search.domain.api.TrackRepository
 import com.example.playlistmaker.search.domain.impl.SearchHistoryInteractorImpl
 import com.example.playlistmaker.search.domain.impl.TrackInteractorImpl
-import com.example.playlistmaker.search.data.network.RetrofitNetworkService
 import com.example.playlistmaker.settings.data.impl.SettingsRepositoryImpl
 import com.example.playlistmaker.settings.domain.api.SettingsInteractor
 import com.example.playlistmaker.settings.domain.api.SettingsRepository
@@ -85,7 +88,7 @@ object Creator {
     }
 
     fun provideInternalNavigator(context: Context): InternalNavigation {
-        return InternalNavigationImpl(context)
+        return InternalNavigationImpl(context as Activity)
     }
 
     fun provideResourcesProvider(context: Context): ResourcesProviderImpl {
