@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".ui.settings.SettingsActivity"
+    tools:context=".ui.settings.activity.SettingsActivity"
     android:id="@+id/settingsScreen"
     android:background="@color/backgroundColor">
 

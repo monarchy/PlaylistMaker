@@ -1,4 +1,4 @@
-package com.example.playlistmaker.ui.settings
+package com.example.playlistmaker.ui.settings.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -61,10 +61,10 @@ class SettingsActivity : AppCompatActivity() {
 
         fun shareContent(title: String, text: String) {
             val shareIntent = Intent().apply {
-                action = Intent.ACTION_SEND
+                Intent.setAction = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TITLE, title)
                 putExtra(Intent.EXTRA_TEXT, text)
-                type = "text/plain"
+                Intent.setType = "text/plain"
             }
             startActivity(Intent.createChooser(shareIntent, getString(R.string.choose_app)))
         }
@@ -78,7 +78,7 @@ class SettingsActivity : AppCompatActivity() {
         userAgreementButton.setOnClickListener{
             val userAgreementIntent = Intent(Intent.ACTION_VIEW).apply {
                 val url = getString(R.string.agreement_url)
-                data = Uri.parse(url)
+                Intent.setData = Uri.parse(url)
             }
             if (intent.resolveActivity(packageManager)!=null){
                 startActivity(userAgreementIntent)
