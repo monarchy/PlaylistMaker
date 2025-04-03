@@ -14,11 +14,11 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivitySearchBinding
+import com.example.playlistmaker.player.ui.activity.AudioPlayerActivity
 import com.example.playlistmaker.search.domain.models.Track
 import com.example.playlistmaker.search.ui.SearchState
 import com.example.playlistmaker.search.ui.TrackAdapter
 import com.example.playlistmaker.search.ui.viewmodel.SearchViewModel
-import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivity
 import com.example.playlistmaker.util.Constants
 
 class SearchActivity : AppCompatActivity() {

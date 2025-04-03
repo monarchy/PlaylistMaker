@@ -6,7 +6,7 @@
     style="@style/ModeSettingsScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.audioplayer.AudioPlayerActivity">
+    tools:context=".player.ui.activity.AudioPlayerActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
