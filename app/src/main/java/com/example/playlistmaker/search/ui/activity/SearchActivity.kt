@@ -65,6 +65,7 @@ class SearchActivity : AppCompatActivity() {
         }
         viewModel.navigateToPlayer.observe(this) { track ->
             val intent = Intent(this, AudioPlayerActivity::class.java).apply {
+                putExtra(Constants.TRACK, track)
                 putExtra(Constants.TRACK_ID, track.trackId)
                 putExtra(Constants.TRACK_NAME, track.trackName)
                 putExtra(Constants.ARTIST_NAME, track.artistName)

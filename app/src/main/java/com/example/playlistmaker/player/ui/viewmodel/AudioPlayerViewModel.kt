@@ -80,7 +80,7 @@ class AudioPlayerViewModel : ViewModel() {
         handler.removeCallbacks(updatingTime)
     }
 
-    // Вспомогательные методы
+
     private fun formatTime(milliseconds: Int): String {
         return SimpleDateFormat("mm:ss", Locale.getDefault()).format(milliseconds)
     }

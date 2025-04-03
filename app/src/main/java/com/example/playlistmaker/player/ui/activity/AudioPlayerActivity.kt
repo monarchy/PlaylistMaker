@@ -1,8 +1,6 @@
 package com.example.playlistmaker.player.ui.activity
 
-import android.content.Context
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -27,23 +25,17 @@ class AudioPlayerActivity : AppCompatActivity() {
         binding = ActivityAudioPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.back.setOnClickListener {
-            finish()
-        }
+        binding.back.setOnClickListener { finish() }
 
-        val track = getTrackFromIntent()
+        val track = intent.getParcelableExtra<Track>(Constants.TRACK)
+            ?: throw IllegalArgumentException("Track data is missing")
 
         setupTrackInfo(track)
-
         viewModel.setDataSource(track.previewUrl)
 
-        viewModel.playerState.observe(this) { state ->
-            updateUI(state)
-        }
+        viewModel.playerState.observe(this, ::updateUI)
 
-        binding.buttonPlay.setOnClickListener {
-            viewModel.playbackControl()
-        }
+        binding.buttonPlay.setOnClickListener { viewModel.playbackControl() }
     }
 
     override fun onPause() {
@@ -51,80 +43,55 @@ class AudioPlayerActivity : AppCompatActivity() {
         viewModel.pausePlayer()
     }
 
-    private fun getTrackFromIntent(): Track {
-        return Track(
-            trackId = intent.getIntExtra(Constants.TRACK_ID, 0),
-            trackName = intent.getStringExtra(Constants.TRACK_NAME) ?: "",
-            artistName = intent.getStringExtra(Constants.ARTIST_NAME) ?: "",
-            trackTimeMillis = intent.getLongExtra(Constants.TRACK_TIME_MILLIS, 0),
-            artworkUrl100 = intent.getStringExtra(Constants.ART_WORK_URL) ?: "",
-            collectionName = intent.getStringExtra(Constants.COLLECTION_NAME) ?: "",
-            releaseDate = intent.getStringExtra(Constants.RELEASE_DATE) ?: "",
-            primaryGenreName = intent.getStringExtra(Constants.PRIMARY_GENRE_NAME) ?: "",
-            country = intent.getStringExtra(Constants.COUNTRY) ?: "",
-            previewUrl = intent.getStringExtra(Constants.PREVIEW_URL) ?: ""
-        )
-    }
+    private fun setupTrackInfo(track: Track) = with(binding) {
+        trackName.text = track.trackName
+        artistName.text = track.artistName
+        trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTimeMillis)
 
-    private fun setupTrackInfo(track: Track) {
-        binding.trackName.text = track.trackName
-        binding.artistName.text = track.artistName
-        binding.trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault())
-            .format(track.trackTimeMillis)
-
-        if (track.collectionName.isEmpty()) {
-            binding.collectionName.visibility = View.GONE
-        } else {
-            binding.collectionName.text = track.collectionName
+        collectionName.apply {
+            text = track.collectionName
+            visibility = if (track.collectionName.isEmpty()) View.GONE else View.VISIBLE
         }
 
-        val year = track.releaseDate.substring(0, 4)
-        binding.releaseDate.text = year
+        releaseDate.text = track.releaseDate.take(4)  // Берем только год
+        primaryGenreName.text = track.primaryGenreName
+        country.text = track.country
 
-        binding.primaryGenreName.text = track.primaryGenreName
-        binding.country.text = track.country
-
-        val cornerRadius = dpToPx(8f, this)
-        Glide.with(binding.imageMusic.context)
+        Glide.with(imageMusic.context)
             .load(track.getCoverArtwork())
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)
             .centerCrop()
-            .transform(RoundedCorners(cornerRadius))
-            .into(binding.imageMusic)
+            .transform(RoundedCorners(8.dpToPx()))
+            .into(imageMusic)
     }
 
-    private fun updateUI(state: AudioPlayerState) {
+    private fun updateUI(state: AudioPlayerState) = with(binding) {
+        buttonPlay.isEnabled = when (state) {
+            is AudioPlayerState.Default -> state.isPlayButtonEnabled
+            is AudioPlayerState.Prepared -> state.isPlayButtonEnabled
+            is AudioPlayerState.Playing -> state.isPlayButtonEnabled
+            is AudioPlayerState.Paused -> state.isPlayButtonEnabled
+        }
+
         when (state) {
-            is AudioPlayerState.Default -> {
-                binding.buttonPlay.isEnabled = state.isPlayButtonEnabled
-            }
-
             is AudioPlayerState.Prepared -> {
-                binding.buttonPlay.isEnabled = state.isPlayButtonEnabled
-                binding.buttonPlay.setImageResource(R.drawable.play_button)
-                binding.timePlay.setText(R.string.timer)
+                buttonPlay.setImageResource(R.drawable.play_button)
+                timePlay.setText(R.string.timer)
             }
-
             is AudioPlayerState.Playing -> {
-                binding.buttonPlay.isEnabled = state.isPlayButtonEnabled
-                binding.buttonPlay.setImageResource(R.drawable.pause)
-                binding.timePlay.text = state.currentPosition
+                buttonPlay.setImageResource(R.drawable.pause)
+                timePlay.text = state.currentPosition
             }
-
             is AudioPlayerState.Paused -> {
-                binding.buttonPlay.isEnabled = state.isPlayButtonEnabled
-                binding.buttonPlay.setImageResource(R.drawable.play_button)
-                binding.timePlay.text = state.currentPosition
+                buttonPlay.setImageResource(R.drawable.play_button)
+                timePlay.text = state.currentPosition
             }
+            else -> {}
         }
     }
 
-    private fun dpToPx(dp: Float, context: Context): Int {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            dp,
-            context.resources.displayMetrics
-        ).toInt()
+    private fun Int.dpToPx(): Int {
+        return (this * resources.displayMetrics.density).toInt()
     }
 }
