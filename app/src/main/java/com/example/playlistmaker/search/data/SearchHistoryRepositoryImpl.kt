@@ -1,4 +1,4 @@
-package com.example.playlistmaker.data
+package com.example.playlistmaker.search.data
 
 import android.content.SharedPreferences
 import com.example.playlistmaker.domain.api.SearchHistoryRepository
