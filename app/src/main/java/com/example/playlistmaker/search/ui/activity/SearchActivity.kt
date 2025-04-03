@@ -166,56 +166,58 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateUI(
+        showProgressBar: Boolean = false,
+        showPlaceholderImage: Boolean = false,
+        placeholderImageRes: Int? = null,
+        showUpdateButton: Boolean = false,
+        showCleanHistoryButton: Boolean = false,
+        showPlaceholderMessage: Boolean = false,
+        message: String? = null
+    ) {
+        binding.progressBar.isVisible = showProgressBar
+        binding.placeholderImage.isVisible = showPlaceholderImage
+        placeholderImageRes?.let { binding.placeholderImage.setImageResource(it) }
+        binding.updateButton.isVisible = showUpdateButton
+        binding.cleanHistoryButton.isVisible = showCleanHistoryButton
+        binding.placeholderMessage.isVisible = showPlaceholderMessage
+        message?.let { binding.placeholderMessage.text = it }
+    }
+
     private fun showLoading() {
-        binding.progressBar.visibility = View.VISIBLE
-        binding.placeholderImage.visibility = View.GONE
-        binding.updateButton.visibility = View.GONE
-        binding.cleanHistoryButton.visibility = View.GONE
-        binding.placeholderMessage.visibility = View.GONE
+        updateUI(showProgressBar = true)
     }
 
     private fun showError(errorMessage: String) {
-        binding.progressBar.visibility = View.GONE
-        binding.placeholderImage.setImageResource(R.drawable.placeholder_error)
-        binding.placeholderImage.visibility = View.VISIBLE
-        binding.updateButton.visibility = View.VISIBLE
-        binding.cleanHistoryButton.visibility = View.GONE
-        binding.placeholderMessage.visibility = View.VISIBLE
-        binding.placeholderMessage.text = errorMessage
-
+        updateUI(
+            showPlaceholderImage = true,
+            placeholderImageRes = R.drawable.placeholder_error,
+            showUpdateButton = true,
+            showPlaceholderMessage = true,
+            message = errorMessage
+        )
     }
 
     private fun showEmpty(emptyMessage: String) {
-        binding.progressBar.visibility = View.GONE
-        binding.placeholderImage.setImageResource(R.drawable.placeholder_nothing_found)
-        binding.placeholderImage.visibility = View.VISIBLE
-        binding.updateButton.visibility = View.GONE
-        binding.cleanHistoryButton.visibility = View.GONE
-        binding.placeholderMessage.visibility = View.VISIBLE
-        binding.placeholderMessage.text = emptyMessage
+        updateUI(
+            showPlaceholderImage = true,
+            placeholderImageRes = R.drawable.placeholder_nothing_found,
+            showPlaceholderMessage = true,
+            message = emptyMessage
+        )
     }
 
     private fun showContent(tracks: List<Track>) {
-        binding.progressBar.visibility = View.GONE
-        binding.placeholderImage.visibility = View.GONE
-        binding.updateButton.visibility = View.GONE
-        binding.cleanHistoryButton.visibility = View.GONE
-        binding.placeholderMessage.visibility = View.GONE
+        updateUI()
         trackAdapter.tracks.clear()
         trackAdapter.tracks.addAll(tracks)
         trackAdapter.notifyDataSetChanged()
-
     }
 
     private fun showHistory(history: List<Track>) {
-        binding.progressBar.visibility = View.GONE
-        binding.placeholderImage.visibility = View.GONE
-        binding.updateButton.visibility = View.GONE
-        binding.cleanHistoryButton.visibility = View.VISIBLE
-        binding.placeholderMessage.visibility = View.GONE
+        updateUI(showCleanHistoryButton = true)
         trackAdapter.tracks.clear()
         trackAdapter.tracks.addAll(history)
         trackAdapter.notifyDataSetChanged()
-
     }
 }
