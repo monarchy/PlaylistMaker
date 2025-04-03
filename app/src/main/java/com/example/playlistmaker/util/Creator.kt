@@ -2,17 +2,16 @@ package com.example.playlistmaker.util
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.loader.ResourcesProvider
-import com.example.playlistmaker.search.data.NetworkClient
+import com.example.playlistmaker.search.data.ResourcesProviderImpl
 import com.example.playlistmaker.search.data.SearchHistoryRepositoryImpl
 import com.example.playlistmaker.search.data.TrackRepositoryImpl
 import com.example.playlistmaker.search.data.network.PlaylistApi
-import com.example.playlistmaker.domain.api.SearchHistoryInteractor
-import com.example.playlistmaker.domain.api.SearchHistoryRepository
-import com.example.playlistmaker.domain.api.TrackInteractor
-import com.example.playlistmaker.domain.api.TrackRepository
-import com.example.playlistmaker.domain.impl.SearchHistoryInteractorImpl
-import com.example.playlistmaker.domain.impl.TrackInteractorImpl
+import com.example.playlistmaker.search.domain.api.SearchHistoryInteractor
+import com.example.playlistmaker.search.domain.api.SearchHistoryRepository
+import com.example.playlistmaker.search.domain.api.TrackInteractor
+import com.example.playlistmaker.search.domain.api.TrackRepository
+import com.example.playlistmaker.search.domain.impl.SearchHistoryInteractorImpl
+import com.example.playlistmaker.search.domain.impl.TrackInteractorImpl
 import com.example.playlistmaker.search.data.network.RetrofitNetworkService
 import com.example.playlistmaker.settings.data.impl.SettingsRepositoryImpl
 import com.example.playlistmaker.settings.domain.api.SettingsInteractor

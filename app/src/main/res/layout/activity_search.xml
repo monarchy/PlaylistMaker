@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/backgroundColor"
-    tools:context=".ui.search.SearchActivity">
+    tools:context=".search.ui.activity.SearchActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/goBackButton"

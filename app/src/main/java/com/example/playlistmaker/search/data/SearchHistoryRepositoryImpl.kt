@@ -1,8 +1,8 @@
 package com.example.playlistmaker.search.data
 
 import android.content.SharedPreferences
-import com.example.playlistmaker.domain.api.SearchHistoryRepository
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.search.domain.api.SearchHistoryRepository
+import com.example.playlistmaker.search.domain.models.Track
 import com.google.gson.Gson
 
 class SearchHistoryRepositoryImpl(private val sharedPrefs: SharedPreferences) : SearchHistoryRepository {
@@ -54,7 +54,7 @@ class SearchHistoryRepositoryImpl(private val sharedPrefs: SharedPreferences) : 
                     val (timestamp, json) = value.toString().split("|")
                     val track = Gson().fromJson(json, Track::class.java)
                     Pair(timestamp.toLong(), track)
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                     null
                 }
             }.sortedByDescending { it.first }
