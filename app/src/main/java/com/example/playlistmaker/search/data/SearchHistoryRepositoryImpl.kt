@@ -1,6 +1,7 @@
 package com.example.playlistmaker.search.data
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.example.playlistmaker.search.domain.api.SearchHistoryRepository
 import com.example.playlistmaker.search.domain.models.Track
 import com.google.gson.Gson
@@ -18,9 +19,9 @@ class SearchHistoryRepositoryImpl(private val sharedPrefs: SharedPreferences) : 
 
         if (searchList.size > maxSize) {
             val removedTrack = searchList.removeAt(searchList.size - 1)
-            sharedPrefs.edit()
-                .remove(removedTrack.trackId.toString())
-                .apply()
+            sharedPrefs.edit() {
+                remove(removedTrack.trackId.toString())
+            }
         }
 
         saveTrackToPrefs(track, System.currentTimeMillis())
@@ -28,9 +29,9 @@ class SearchHistoryRepositoryImpl(private val sharedPrefs: SharedPreferences) : 
 
     override fun saveTrackToPrefs(track: Track, timestamp: Long) {
         val json = Gson().toJson(track)
-        sharedPrefs.edit()
-            .putString(track.trackId.toString(), "$timestamp|$json")
-            .apply()
+        sharedPrefs.edit() {
+            putString(track.trackId.toString(), "$timestamp|$json")
+            }
     }
 
     override fun getHistory(): ArrayList<Track> {
@@ -38,9 +39,9 @@ class SearchHistoryRepositoryImpl(private val sharedPrefs: SharedPreferences) : 
     }
 
     override fun cleanHistory() {
-        sharedPrefs.edit()
-            .clear()
-            .apply()
+        sharedPrefs.edit() {
+            clear()
+        }
 
         searchList.clear()
     }
@@ -63,9 +64,9 @@ class SearchHistoryRepositoryImpl(private val sharedPrefs: SharedPreferences) : 
 
         while (searchList.size > maxSize) {
             val removedTrack = searchList.removeAt(searchList.size - 1)
-            sharedPrefs.edit()
-                .remove(removedTrack.trackId.toString())
-                .apply()
+            sharedPrefs.edit() {
+                remove(removedTrack.trackId.toString())
+            }
         }
     }
 }
