@@ -6,19 +6,19 @@ import com.example.playlistmaker.sharing.domain.api.ExternalNavigator
 import com.example.playlistmaker.sharing.domain.api.SharingInteractor
 
 class SharingInteractorImpl(
-    private val externalNavigator: ExternalNavigator,
+    private val externalNavigator: (Activity) -> ExternalNavigator,
     private val sharingResourcesProvider: SharingResourcesProvider
 ) : SharingInteractor {
     override fun shareApp(activity: Activity) {
-        externalNavigator.shareLink(sharingResourcesProvider.getShareAppLink())
+        externalNavigator(activity).shareLink(sharingResourcesProvider.getShareAppLink())
     }
 
     override fun openTerms(activity: Activity) {
-        externalNavigator.openLink(sharingResourcesProvider.getTermsLink())
+        externalNavigator(activity).openLink(sharingResourcesProvider.getTermsLink())
     }
 
     override fun openSupport(activity: Activity) {
-        externalNavigator.openEmail(sharingResourcesProvider.getSupportEmailData())
+        externalNavigator(activity).openEmail(sharingResourcesProvider.getSupportEmailData())
     }
 
 }
