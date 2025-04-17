@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.player.ui.activity.AudioPlayerActivity
@@ -20,6 +19,7 @@ import com.example.playlistmaker.search.ui.SearchState
 import com.example.playlistmaker.search.ui.TrackAdapter
 import com.example.playlistmaker.search.ui.viewmodel.SearchViewModel
 import com.example.playlistmaker.util.Constants
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : AppCompatActivity() {
 
@@ -27,7 +27,7 @@ class SearchActivity : AppCompatActivity() {
         private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
 
-    private lateinit var viewModel: SearchViewModel
+    private val viewModel by viewModel<SearchViewModel>()
 
 
     private lateinit var binding: ActivitySearchBinding
@@ -50,10 +50,6 @@ class SearchActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.searchRecyclerView.adapter = trackAdapter
-        viewModel = ViewModelProvider(
-            this,
-            SearchViewModel.getViewModelFactory(this)
-        )[SearchViewModel::class.java]
 
         setupListeners()
         viewModel.searchState.observe(this) {
@@ -61,7 +57,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         viewModel.toastState.observe(this) {
-            showToast(it)
+            it?.let { showToast(it) }
         }
         viewModel.navigateToPlayer.observe(this) { track ->
             val intent = Intent(this, AudioPlayerActivity::class.java).apply {

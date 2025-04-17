@@ -9,13 +9,14 @@ import androidx.lifecycle.ViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class AudioPlayerViewModel : ViewModel() {
+class AudioPlayerViewModel(
+    private val mediaPlayer: MediaPlayer
+) : ViewModel() {
 
     companion object {
         const val UPDATE_TIME = 300L
     }
 
-    private var mediaPlayer = MediaPlayer()
     private val handler = Handler(Looper.getMainLooper())
 
     private val _playerState = MutableLiveData<AudioPlayerState>()
@@ -79,7 +80,6 @@ class AudioPlayerViewModel : ViewModel() {
         mediaPlayer.release()
         handler.removeCallbacks(updatingTime)
     }
-
 
     private fun formatTime(milliseconds: Int): String {
         return SimpleDateFormat("mm:ss", Locale.getDefault()).format(milliseconds)

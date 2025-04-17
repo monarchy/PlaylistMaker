@@ -1,6 +1,8 @@
 package com.example.playlistmaker.util
 
 object Constants {
+    const val SHARED_PREFS = "search_history"
+    const val BASE_URL = "https://itunes.apple.com"
     const val TRACK_ID = "TRACK_ID"
     const val TRACK_NAME = "TRACK_NAME"
     const val ARTIST_NAME = "ARTIST_NAME"
