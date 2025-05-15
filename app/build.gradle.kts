@@ -53,5 +53,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation ("androidx.core:core-ktx:1.9.0")
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation("io.insert-koin:koin-android:3.3.0")
+    implementation ("androidx.fragment:fragment-ktx:1.6.2")
+
+
 }

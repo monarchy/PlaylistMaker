@@ -37,7 +37,8 @@ class App : Application() {
                 sharingInteractorModule,
                 settingsRepositoryModule,
                 settingsInteractorModule,
-                settingsViewModelModule
+                settingsViewModelModule,
+                mediaViewModules
             )
         }
     }
