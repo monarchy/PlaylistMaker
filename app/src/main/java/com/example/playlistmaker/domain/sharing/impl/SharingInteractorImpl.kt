@@ -13,6 +13,6 @@ class SharingInteractorImpl(private val sharingRepository: SharingRepository):Sh
     }
 
     override fun shareApp() {
-        sharingRepository.shareApp()
+        sharingRepository.shareApp("https://practicum.yandex.ru/android-developer/")
     }
 }

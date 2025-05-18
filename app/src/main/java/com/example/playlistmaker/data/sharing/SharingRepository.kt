@@ -1,7 +1,7 @@
 package com.example.playlistmaker.data.sharing
 
 interface SharingRepository {
-    fun shareApp()
+    fun shareApp(link: String)
     fun openTerms()
     fun openSupport()
 }
