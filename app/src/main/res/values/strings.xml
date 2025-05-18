@@ -41,7 +41,7 @@
     <string name="playlists">Плейлисты</string>
     <string name="library">Медиатека</string>
     <string name="genre">Жанр</string>
-    <string name="network_error">Проблемы со связью\\n\\nЗагрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="network_error">Проблемы со связью\nЗагрузка не удалась. Проверьте подключение к интернету</string>
 </resources>
 
 

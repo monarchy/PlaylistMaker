@@ -109,7 +109,7 @@
     <style name="fragmentStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/backgroundColor</item>
         <item name="android:orientation">vertical</item>
     </style>
     <style name="headerText">
@@ -154,8 +154,6 @@
 
     <style name="searchBar">
         <item name="android:orientation">horizontal</item>
-        <item name="android:background">@drawable/rounded_shape</item>
-        <item name="android:backgroundTint">@color/light_grey</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/search_bar_height</item>
         <item name="android:layout_marginTop">64dp</item>
@@ -269,12 +267,17 @@
         <item name="android:paddingStart">@dimen/padding_start_settings</item>
         <item name="android:paddingVertical">@dimen/padding_vertical_settings</item>
     </style>
+    <style name="tablayoutStyle">
+        <item name="tabTextColor">@color/white_or_black</item>
+        <item name="tabIndicatorColor">@color/white_or_black</item>
+        <item name="android:background">@color/backgroundColor</item>
+    </style>
 
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="header_text_size">26sp</dimen>
     <dimen name="player_track_name">22sp</dimen>
     <dimen name="bottom_info_size">13sp</dimen>
-    <dimen name="search_bar_height">36dp</dimen>
+    <dimen name="search_bar_height">42dp</dimen>
     <dimen name="default_size">16sp</dimen>
     <dimen name="searchedIt">52dp</dimen>
     <dimen name="size_you_searched_it">19sp</dimen>

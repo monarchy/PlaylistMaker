@@ -23,7 +23,7 @@
     <style name="fragmentStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/black</item>
+        <item name="android:background">@color/backgroundColor</item>
         <item name="android:orientation">vertical</item>
     </style>
 
@@ -182,6 +182,12 @@
         <item name="drawableTint">@color/white</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingVertical">21dp</item>
+    </style>
+
+    <style name="tablayoutStyle">
+        <item name="tabTextColor">@color/white_or_black</item>
+        <item name="tabIndicatorColor">@color/white_or_black</item>
+        <item name="android:background">@color/backgroundColor</item>
     </style>
 
     <dimen name="toolbar_height">56dp</dimen>
