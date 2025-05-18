@@ -43,6 +43,8 @@ dependencies {
     implementation (libs.glide)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.androidx.lifecycle.common.jvm)
+    implementation(libs.androidx.navigation.fragment)
     annotationProcessor (libs.compiler)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -55,7 +57,8 @@ dependencies {
     implementation ("androidx.core:core-ktx:1.9.0")
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation("io.insert-koin:koin-android:3.3.0")
-    implementation ("androidx.fragment:fragment-ktx:1.6.2")
+    implementation ("androidx.fragment:fragment-ktx:1.8.6")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.8.9")
 
 
 }

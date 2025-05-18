@@ -15,4 +15,7 @@
     <dimen name="progressBar">44dp</dimen>
     <dimen name="textSize">22sp</dimen>
     <dimen name="little_size_text">14sp</dimen>
+    <dimen name="bottom_nav_text_size">12sp</dimen>
+    <dimen name="bottom_padding">20dp</dimen>
+    <dimen name="margin_top_cover">26dp</dimen>
 </resources>
