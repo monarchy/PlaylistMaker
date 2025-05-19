@@ -39,7 +39,9 @@
                 android:drawableStart="@drawable/lupa"
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/searchBarHintColor"
-                android:imeOptions="actionSearch" />
+                android:imeOptions="actionSearch"
+                android:textCursorDrawable="@drawable/custom_cursor"
+                />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/clearButton"

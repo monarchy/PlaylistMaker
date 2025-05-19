@@ -1,4 +1,4 @@
-package com.example.playlistmaker.data.player
+package com.example.playlistmaker.domain.player
 
 import androidx.lifecycle.LiveData
 import com.example.playlistmaker.util.MediaPlayerState
