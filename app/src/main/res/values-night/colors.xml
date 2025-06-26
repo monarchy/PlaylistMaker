@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="backgroundColor">#121212</color>
+    <color name="backgroundColor">#1A1B22</color>
     <color name="backgroundColorForMain">#121212</color>
     <color name="onBackgroundColor">#FFFFFF</color>
     <color name="surfaceColor">#1E1E1E</color>
@@ -15,4 +15,11 @@
     <color name="updateText">#000000</color>
     <color name="arrow_back">#FFFFFF</color>
     <color name="arrowBack">#FFFFFF</color>
+    <color name="bottom_nav_select">#3772E7</color>
+    <color name="bottom_nav_unselected">#FFFFFF</color>
+    <color name="bottom_nav_back">#1A1B22</color>
+    <color name="grey">#AEAFB4</color>
+    <color name="transparent">#00000000</color>
+    <color name="white_or_black">#FFFFFF</color>
+    <color name="light_blue">#9FBBF3</color>
 </resources>
