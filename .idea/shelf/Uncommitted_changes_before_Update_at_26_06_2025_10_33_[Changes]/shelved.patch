@@ -1,0 +1,3 @@
+diff --git a/app/src/main/java/com/example/playlistmaker/util/Debounce.kt b/app/src/main/java/com/example/playlistmaker/util/ClickDebounce.kt
+rename from app/src/main/java/com/example/playlistmaker/util/Debounce.kt
+rename to app/src/main/java/com/example/playlistmaker/util/ClickDebounce.kt
