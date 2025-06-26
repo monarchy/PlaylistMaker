@@ -1,7 +1,7 @@
 package com.example.playlistmaker.data.search.impl
 
 import android.content.SharedPreferences
-import com.example.playlistmaker.data.search.StoreCleanerRepository
+import com.example.playlistmaker.domain.search.StoreCleanerRepository
 
 class StoreCleanerRepositoryImpl(private val searchHistoryPreferences: SharedPreferences) :
     StoreCleanerRepository {

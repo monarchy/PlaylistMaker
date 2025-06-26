@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.example.playlistmaker.databinding.FragmentMediaLibraryBinding
+import com.example.playlistmaker.databinding.FragmentLibraryBinding
 import com.example.playlistmaker.presentation.library.LibraryFragmentViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LibraryFragment : Fragment() {
-    private lateinit var binding: FragmentMediaLibraryBinding
+    private lateinit var binding: FragmentLibraryBinding
     private val viewModel: LibraryFragmentViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMediaLibraryBinding.inflate(inflater, container, false)
+        binding = FragmentLibraryBinding.inflate(inflater, container, false)
         return binding.root
     }
 

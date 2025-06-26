@@ -2,53 +2,38 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mediaScreen"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
-    tools:context="com.example.playlistmaker.ui.library.MediaLibraryFragment">
+    style="@style/fragmentStyle"
+    tools:context=".ui.library.MediaLibraryFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/goBackButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:title="@string/media"
-        android:background="@color/backgroundColor"
-        app:navigationIconTint="?attr/colorOnBackground"
-        app:layout_constraintTop_toTopOf="parent"
+    <Toolbar
+        android:id="@+id/library_back"
+        style="@style/toolbarStyle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="24dp"
+        android:title="@string/library"/>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="0dp"
+        android:id="@+id/tabLayout"
+        style="@style/tablayoutStyle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabTextColor="@color/placeholder_text"
-        android:background="@android:color/transparent"
-        app:tabIndicatorColor="@color/placeholder_text"
-        app:tabIndicatorHeight="2dp"
-        app:tabTextAppearance="@style/tablayoutTextStyle"
-        app:layout_constraintTop_toBottomOf="@id/goBackButton"
+        app:layout_constraintTop_toBottomOf="@id/library_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Избранные треки" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Плейлисты" />
-    </com.google.android.material.tabs.TabLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tabTextAppearance="@style/tablayoutTextStyle" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/tab_layout"
+        android:id="@+id/viewPager"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
