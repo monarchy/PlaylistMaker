@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="backgroundColor">#121212</color>
+    <color name="backgroundColor">#1A1B22</color>
     <color name="backgroundColorForMain">#121212</color>
     <color name="onBackgroundColor">#FFFFFF</color>
     <color name="surfaceColor">#1E1E1E</color>

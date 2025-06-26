@@ -2,7 +2,7 @@ package com.example.playlistmaker.domain.player.impl
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.playlistmaker.data.player.UserMediaPlayerRepository
+import com.example.playlistmaker.domain.player.UserMediaPlayerRepository
 import com.example.playlistmaker.domain.player.PlayerInterractor
 import com.example.playlistmaker.util.MediaPlayerState
 import kotlinx.coroutines.CoroutineScope

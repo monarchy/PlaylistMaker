@@ -94,11 +94,10 @@ class SearchFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!s.isNullOrEmpty()) {
-                    binding.clearButton.visibility = clearButtonVisibility(s)
-                    searchQuery = s.toString()
-                    searchRequestDebounce(searchQuery!!)
-                } else return
+                val text = s?.toString() ?: ""
+                binding.clearButton.visibility = clearButtonVisibility(text)
+                searchQuery = text
+                viewModel.searchRequestDebounce(text)
             }
         }
 

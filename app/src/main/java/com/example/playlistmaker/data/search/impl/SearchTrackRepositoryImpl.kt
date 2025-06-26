@@ -3,8 +3,8 @@ package com.example.playlistmaker.data.search.impl
 import com.example.playlistmaker.data.dto.TrackSearchRequest
 import com.example.playlistmaker.data.dto.TrackSearchResponse
 import com.example.playlistmaker.data.network.NetworkClient
-import com.example.playlistmaker.data.search.SearchTrackRepository
 import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.domain.search.SearchTrackRepository
 import com.example.playlistmaker.util.Resource
 import com.example.playlistmaker.util.SearchState
 import kotlinx.coroutines.flow.Flow

@@ -1,4 +1,4 @@
-package com.example.playlistmaker.data.search
+package com.example.playlistmaker.domain.search
 
 interface StoreCleanerRepository {
     fun cleanStore()

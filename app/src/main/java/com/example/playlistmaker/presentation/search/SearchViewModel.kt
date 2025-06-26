@@ -54,10 +54,17 @@ class SearchViewModel(
     }
 
     fun searchRequestDebounce(query: String) {
-        if (query.isNotEmpty() && query != currentQuery) {
+        searchDebounceJob?.cancel()
+
+        if (query.isEmpty()) {
+            currentQuery = ""
+            clearSearchRequest()
+            return
+        }
+
+        if (query != currentQuery) {
             currentQuery = query
             _screenState.postValue(SearchState.Loading)
-            searchDebounceJob?.cancel()
             searchDebounceJob = viewModelScope.launch {
                 delay(SEARCH_DEBOUNCE_DELAY)
                 trackSearchInteractor?.searchTracks(query)?.collect { pair ->
