@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/settings"
+    style="@style/fragmentStyle"
+    tools:context="com.example.playlistmaker.ui.settings.SettingsFragment">
+
+    <Toolbar
+        android:id="@+id/settings_back"
+        style="@style/toolbarStyle"
+        android:layout_marginBottom="24dp"
+        android:title="@string/settings"/>
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/themeSwitcher"
+        style="@style/switchDarkTheme"
+        android:text="@string/dark_theme_text"
+        android:paddingEnd="6dp"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/linkApp"
+        style="@style/materialTextViewSetting"
+        android:text="@string/share_app_text"
+        android:drawableEnd="@drawable/share"
+        android:paddingEnd="16dp"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/writeToSupport"
+        style="@style/materialTextViewSetting"
+        android:text="@string/wrote_to_tech"
+        android:drawableEnd="@drawable/support"
+        android:paddingEnd="14dp"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/userAgreement"
+        style="@style/materialTextViewSetting"
+        android:text="@string/consumers_agreement"
+        android:drawableEnd="@drawable/arrow_forward"
+        android:paddingEnd="20dp"/>
+</LinearLayout>
