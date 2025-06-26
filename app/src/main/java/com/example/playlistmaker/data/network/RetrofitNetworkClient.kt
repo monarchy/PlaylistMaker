@@ -11,13 +11,19 @@ class RetrofitNetworkClient(
     private val tunesService: ITunesApi,
     private val context: Context
 ) : NetworkClient {
-
     override suspend fun doRequest(dto: Any): Response {
+        if (!isInternetAvailable(context)) {
+            return Response().apply { resultCode = -1 }
+        }
+        if (dto !is TrackSearchRequest) {
+            return Response().apply { resultCode = 400 }
+        }
         return withContext(Dispatchers.IO) {
-            if (context.isInternetAvailable()) {
-                tunesService.searchTracks(dto as TrackSearchRequest)
-            } else {
-                throw NoConnectionException()
+            try {
+                val resp = tunesService.search(dto.expression)
+                resp.apply { resultCode = 200 }
+            } catch (e: Throwable) {
+                Response().apply { resultCode = 500 }
             }
         }
     }
