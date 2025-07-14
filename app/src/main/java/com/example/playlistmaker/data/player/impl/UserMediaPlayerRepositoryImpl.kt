@@ -96,7 +96,7 @@ class UserMediaPlayerRepositoryImpl(
     }
 
     override fun getPlayTimer(): String {
-        return dateFormat.format(mediaPlayer.duration - mediaPlayer.currentPosition)
+        return dateFormat.format(mediaPlayer.currentPosition)
     }
 
     companion object{
