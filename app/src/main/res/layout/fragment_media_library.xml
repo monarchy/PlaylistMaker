@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/fragmentStyle"
-    tools:context=".ui.library.MediaLibraryFragment">
+    tools:context=".ui.media_library.MediaLibraryFragment">
 
     <Toolbar
         android:id="@+id/library_back"
@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginBottom="24dp"
-        android:title="@string/library"/>
+        android:title="@string/library" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -34,6 +34,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="0dp"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

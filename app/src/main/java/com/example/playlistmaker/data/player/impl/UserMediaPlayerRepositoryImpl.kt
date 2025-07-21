@@ -91,7 +91,7 @@ class UserMediaPlayerRepositoryImpl(
             }
 
             null -> {
-                trackUrl?.let {preparePlayer(trackUrl!!)}
+                trackUrl?.let { preparePlayer(trackUrl!!) }
             }
         }
     }
@@ -100,7 +100,7 @@ class UserMediaPlayerRepositoryImpl(
         return dateFormat.format(mediaPlayer.duration - mediaPlayer.currentPosition)
     }
 
-    companion object{
-        private const val UPDATE_TIME:Long = 300
+    companion object {
+        private const val UPDATE_TIME: Long = 300
     }
 }

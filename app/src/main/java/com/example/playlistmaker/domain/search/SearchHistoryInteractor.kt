@@ -1,6 +1,5 @@
 package com.example.playlistmaker.domain.search
 
-import android.content.SharedPreferences
 import com.example.playlistmaker.domain.models.Track
 import kotlinx.coroutines.flow.Flow
 

@@ -1,69 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="activeTextStyle">
-        <item name="android:fontFamily">@font/ys_display_regular</item>
-        <item name="android:textSize">@dimen/bottom_nav_text_size</item>
-        <item name="android:letterSpacing">0.03</item>
-    </style>
 
-    <style name="inactiveTextStyle">
-        <item name="android:fontFamily">@font/ys_display_regular</item>
-        <item name="android:textSize">@dimen/bottom_nav_text_size</item>
-        <item name="android:letterSpacing">0.03</item>
-    </style>
-
-    <style name="bottom_navigation">
-        <item name="itemTextColor">@color/bottom_nav_selector</item>
-        <item name="itemIconTint">@color/bottom_nav_selector</item>
-        <item name="background">@drawable/bottom_nav_background</item>
-        <item name="itemTextAppearanceActive">@style/activeTextStyle</item>
-        <item name="itemTextAppearanceInactive">@style/inactiveTextStyle</item>
-    </style>
-
-    <style name="fragmentStyle">
+    <style name="switchDarkTheme">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/backgroundColor</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="toolbarStyle">
-        <item name="android:titleTextAppearance">@style/headerText</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/toolbar_height</item>
-        <item name="android:contentInsetStartWithNavigation">0dp</item>
-    </style>
-
-    <style name="trackNamePlayer">
-        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:layout_height">@dimen/setting_button_height</item>
+        <item name="android:paddingHorizontal">16dp</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/medium_size</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textSize">@dimen/player_track_name</item>
+        <item name="trackTint">@color/light_blue</item>
+        <item name="thumbTint">@color/blue</item>
+        <item name="android:thumb">@drawable/knob</item>
     </style>
 
-    <style name="littleInfo">
-        <item name="android:fontFamily">@font/ys_display_medium</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textSize">@dimen/little_size_text</item>
-    </style>
-
-    <style name="songInfoLeft">
-        <item name="android:textSize">@dimen/bottom_info_size</item>
-        <item name="android:fontFamily">@font/ys_text_regular</item>
-        <item name="android:textColor">@color/grey</item>
-    </style>
-    <style name="headerText">
-        <item name="android:fontFamily">@font/ys_display_medium</item>
-        <item name="android:textSize">@dimen/header_text_size</item>
-        <item name="android:textColor">@color/placeholder_text</item>
-    </style>
-    <style name="songInfoRight">
-        <item name="android:textSize">@dimen/bottom_info_size</item>
-        <item name="android:fontFamily">@font/ys_text_regular</item>
-        <item name="android:textColor">@color/white</item>
+    <style name="searchCross">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical|end</item>
+        <item name="tint">@color/black</item>
+        <item name="android:src">@drawable/cross</item>
+        <item name="android:visibility">gone</item>
     </style>
 
     <style name="searchBar">
@@ -87,54 +43,109 @@
         <item name="android:maxLength">35</item>
         <item name="maxLines">1</item>
         <item name="android:inputType">text</item>
-        <item name="android:textSize">@dimen/default_size</item>
+        <item name="android:textSize">@dimen/medium_size</item>
         <item name="fontFamily">@font/ys_display_regular</item>
-        <item name="android:drawableStart">@drawable/search_button</item>
+        <item name="android:drawableStart">@drawable/search_bar</item>
         <item name="drawableTint">@color/black</item>
         <item name="android:imeOptions">actionDone</item>
         <item name="singleLine">true</item>
-        <item name="android:textCursorDrawable">@drawable/custom_cursor</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_edit_text</item>
     </style>
 
-    <style name="searchCross">
+    <style name="mainButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:insetLeft">16dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetRight">16dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/header_text_size</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="headerText">
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textSize">@dimen/header_text_size</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="toolbarStyle">
+        <item name="android:titleTextAppearance">@style/headerText</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="android:contentInsetStartWithNavigation">0dp</item>
+    </style>
+
+    <style name="materialTextViewSetting">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/setting_button_height</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/medium_size</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="drawableTint">@color/white</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingVertical">21dp</item>
+    </style>
+
+    <style name="mainActivityStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/black</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="fragmentStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/black</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="recItemTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">19dp</item>
+        <item name="android:layout_marginStart">66dp</item>
+        <item name="android:layout_marginTop">14dp</item>
+        <item name="android:layout_marginEnd">44dp</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/medium_size</item>
+    </style>
+
+    <style name="trackLayoutDescription">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center_vertical|end</item>
-        <item name="tint">@color/black</item>
-        <item name="android:src">@drawable/cross</item>
-        <item name="android:visibility">gone</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/description_info</item>
     </style>
 
-    <style name="youSearchedIt">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/searchedIt</item>
+    <style name="trackLayoutCoverStyle">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">45dp</item>
         <item name="android:layout_marginTop">8dp</item>
-        <item name="android:gravity">center</item>
-        <item name="fontFamily">@font/ys_display_medium</item>
-        <item name="android:textSize">@dimen/size_you_searched_it</item>
-        <item name="android:textColor">@color/placeholder_text</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginStart">16dp</item>
     </style>
 
-    <style name="buttonSearchActivity">
-        <item name="android:layout_width">91dp</item>
-        <item name="android:layout_height">36dp</item>
-        <item name="android:layout_marginTop">24dp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">@font/ys_display_medium</item>
-        <item name="android:background">@drawable/rounded_for_update_search</item>
-        <item name="android:text">@string/update</item>
+    <style name="trackLayoutLinearDescription">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">13dp</item>
+        <item name="android:layout_marginStart">66dp</item>
+        <item name="android:layout_marginTop">34dp</item>
+        <item name="android:layout_marginEnd">44dp</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 
-    <style name="errorPlaceholder">
-        <item name="android:layout_width">312dp</item>
+    <style name="trackLayoutIcons">
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/placeholder_vertical_orientation</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:visibility">gone</item>
+        <item name="tint">@color/white</item>
     </style>
 
     <style name="statusPlaceholder">
@@ -153,6 +164,89 @@
         <item name="android:textSize">19sp</item>
     </style>
 
+    <style name="buttonBlackAndWhite">
+        <item name="android:layout_width">91dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:background">@drawable/background_for_button</item>
+        <item name="android:text">@string/update</item>
+    </style>
+
+    <style name="createPlaylistButton">
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:background">@drawable/background_for_playlist_button</item>
+        <item name="android:text">@string/update</item>
+        <item name="android:textSize">@dimen/medium_size</item>
+        <item name="android:layout_marginBottom">32dp</item>
+    </style>
+
+    <style name="textFieldHintStyle">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/default_size_text</item>
+    </style>
+
+    <style name="editTextFieldStyle">
+        <item name="android:textColor">@color/white_or_black</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/medium_size</item>
+        <item name="android:maxLength">20</item>
+    </style>
+
+    <style name="errorPlaceholder">
+        <item name="android:layout_width">312dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/placeholder_vertical_orientation</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="titleStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/searchedIt</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:gravity">center</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:textSize">@dimen/title_size</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="trackNamePlayer">
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/player_track_name</item>
+    </style>
+
+    <style name="littleInfo">
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/default_size_text</item>
+    </style>
+
+    <style name="songInfoLeft">
+        <item name="android:textSize">@dimen/bottom_info_size</item>
+        <item name="android:fontFamily">@font/ys_text_regular</item>
+        <item name="android:textColor">@color/grey</item>
+    </style>
+
+    <style name="songInfoRight">
+        <item name="android:textSize">@dimen/bottom_info_size</item>
+        <item name="android:fontFamily">@font/ys_text_regular</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="progressBar">
         <item name="android:indeterminateTint">@color/blue</item>
         <item name="android:layout_width">@dimen/progress_bar_size</item>
@@ -161,40 +255,56 @@
         <item name="android:layout_marginTop">248dp</item>
     </style>
 
-    <style name="switchDarkTheme">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/setting_button_height</item>
-        <item name="android:paddingHorizontal">16dp</item>
-        <item name="fontFamily">@font/ys_display_regular</item>
-        <item name="android:textSize">@dimen/default_size</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="trackTint">@color/light_blue</item>
-        <item name="thumbTint">@color/blue</item>
-        <item name="android:thumb">@drawable/knob</item>
-    </style>
-
-    <style name="materialTextViewSetting">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/setting_button_height</item>
-        <item name="fontFamily">@font/ys_display_regular</item>
-        <item name="android:textSize">@dimen/default_size</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="drawableTint">@color/white</item>
-        <item name="android:paddingStart">16dp</item>
-        <item name="android:paddingVertical">21dp</item>
-    </style>
-
     <style name="tablayoutStyle">
-        <item name="tabTextColor">@color/white_or_black</item>
-        <item name="tabIndicatorColor">@color/white_or_black</item>
-        <item name="android:background">@color/backgroundColor</item>
+        <item name="tabTextColor">@color/white</item>
+        <item name="tabIndicatorColor">@color/white</item>
+        <item name="android:background">@color/black</item>
     </style>
 
-    <dimen name="toolbar_height">56dp</dimen>
-    <dimen name="header_text_size">26sp</dimen>
-    <dimen name="player_track_name">22sp</dimen>
-    <dimen name="bottom_info_size">13sp</dimen>
-    <dimen name="placeholder_vertical_orientation">210dp</dimen>
-    <dimen name="progress_bar_size">44dp</dimen>
-    <string name="update">Обновить</string>
+    <style name="tablayoutTextStyle">
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="activeTextStyle">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/little_size</item>
+        <item name="android:letterSpacing">0.03</item>
+    </style>
+
+    <style name="inactiveTextStyle">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/little_size</item>
+        <item name="android:letterSpacing">0.03</item>
+    </style>
+
+    <style name="bottom_navigation">
+        <item name="itemTextColor">@color/bottom_nav_selector</item>
+        <item name="itemIconTint">@color/bottom_nav_selector</item>
+        <item name="background">@drawable/bottom_nav_background</item>
+        <item name="itemTextAppearanceActive">@style/activeTextStyle</item>
+        <item name="itemTextAppearanceInactive">@style/inactiveTextStyle</item>
+    </style>
+
+    <style name="snackBarTextStyle">
+        <item name="android:textSize">@dimen/default_size_text</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="playlistContainerText">
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="maxLines">2</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/little_size</item>
+    </style>
+
+    <style name="RoundedCornersImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 </resources>

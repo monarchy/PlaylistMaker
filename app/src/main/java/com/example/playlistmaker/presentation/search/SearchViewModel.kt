@@ -2,7 +2,7 @@ package com.example.playlistmaker.presentation.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.playlistmaker.domain.db.DatabaseInteractor
+import com.example.playlistmaker.domain.db.favorite.FavoriteControlInteractor
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.search.SearchHistoryInteractor
 import com.example.playlistmaker.domain.search.SearchTrackInteractor
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 class SearchViewModel(
     private val searchHistoryInteractor: SearchHistoryInteractor,
     private var trackSearchInteractor: SearchTrackInteractor?,
-    private val databaseInteractor: DatabaseInteractor
+    private val databaseInteractor: FavoriteControlInteractor
 ) : ViewModel() {
 
     override fun onCleared() {

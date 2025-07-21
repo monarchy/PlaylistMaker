@@ -1,22 +1,27 @@
 package com.example.playlistmaker.presentation.player
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.playlistmaker.domain.db.DatabaseInteractor
+import com.example.playlistmaker.domain.db.favorite.FavoriteControlInteractor
+import com.example.playlistmaker.domain.db.playlist.PlaylistInteractor
+import com.example.playlistmaker.domain.models.Playlist
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.player.PlayerInterractor
-import com.example.playlistmaker.util.MediaPlayerState
+import com.example.playlistmaker.ui.media_library.library.BehaviorState
 import com.example.playlistmaker.ui.player.UiPlayerState
+import com.example.playlistmaker.util.MediaPlayerState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PlayerViewModel(
     track: Track,
     private var mediaPlayer: PlayerInterractor?,
-    private val databaseInteractor: DatabaseInteractor,
+    private val databaseInteractor: FavoriteControlInteractor,
+    private val playlistInteractor: PlaylistInteractor
 ) : ViewModel() {
 
     override fun onCleared() {
@@ -25,24 +30,26 @@ class PlayerViewModel(
         mediaPlayer = null
     }
 
-    init {
-        mediaPlayer?.preparePlayer(track.previewUrl)
-        combineFlows()
-    }
-
-    private val _favoriteState = MutableStateFlow(track.isFavorite)
-
+    private val _currentTrack = MutableStateFlow<Track>(track)
+    val currentTrack: StateFlow<Track> get() = _currentTrack
     private val _uiState = MutableStateFlow<UiPlayerState>(
         UiPlayerState.Default(false, "00:00", track.isFavorite)
     )
     val uiState: StateFlow<UiPlayerState> = _uiState
 
-    private val _currentTrack = MutableStateFlow(track)
+    private val _behaviorSheetState = MutableStateFlow<BehaviorState>(BehaviorState.EmptyData(null))
+    val behaviorSheetState: StateFlow<BehaviorState> get() = _behaviorSheetState
+
+    init {
+        mediaPlayer?.preparePlayer(track.previewUrl)
+        combineFlows()
+    }
+
 
     private fun combineFlows() {
         viewModelScope.launch {
-            mediaPlayer!!.mediaPlayerState.combine(_favoriteState) { playerState, isFavorite ->
-                mapToUiState(playerState, isFavorite)
+            combine(mediaPlayer!!.mediaPlayerState, _currentTrack) { playerState, currentTrack ->
+                mapToUiState(playerState, currentTrack.isFavorite)
             }
                 .collect { _uiState.value = it }
         }
@@ -89,20 +96,43 @@ class PlayerViewModel(
 
     fun favoriteControl() {
         viewModelScope.launch {
-            val newState = !_currentTrack.value.isFavorite
-            _currentTrack.value = _currentTrack.value.copy(isFavorite = newState)
-
-            if (newState) {
-                databaseInteractor.addToFavorite(_currentTrack.value)
-                _favoriteState.value = _currentTrack.value.isFavorite
-            } else {
-                databaseInteractor.removeFromFavorite(_currentTrack.value.trackId)
-                _favoriteState.value = _currentTrack.value.isFavorite
-            }
+            _currentTrack.value =
+                _currentTrack.value.copy(isFavorite = !_currentTrack.value.isFavorite)
+            databaseInteractor.favoriteControl(_currentTrack.value)
         }
     }
 
     fun activityOnPause() {
         mediaPlayer?.pauseMusic()
+    }
+
+    fun getPlaylistList() {
+        viewModelScope.launch(Dispatchers.IO) {
+            playlistInteractor.getAllPlaylists().collect() { playlists ->
+                withContext(Dispatchers.Main) {
+                    if (playlists.isEmpty()) {
+                        _behaviorSheetState.value = BehaviorState.EmptyData(null)
+                    } else _behaviorSheetState.value = BehaviorState.PlaylistData(playlists)
+                }
+            }
+        }
+    }
+
+    fun addTrackToPlaylist(track: Track, playlist: Playlist) {
+        viewModelScope.launch {
+            playlistInteractor.addTrackToPlaylist(playlist, track).collect { result ->
+                when {
+                    result.isSuccess -> {
+                        val responseString = result.getOrNull() ?: "Трек добавлен"
+                        _behaviorSheetState.value = BehaviorState.TrackIsAdded(responseString)
+                    }
+
+                    result.isFailure -> {
+                        val responseString = result.exceptionOrNull()?.message ?: "Трек добавлен"
+                        _behaviorSheetState.value = BehaviorState.TrackIsNotAdded(responseString)
+                    }
+                }
+            }
+        }
     }
 }

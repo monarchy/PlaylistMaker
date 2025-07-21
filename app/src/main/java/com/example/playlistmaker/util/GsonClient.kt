@@ -23,6 +23,6 @@ object GsonClient {
 
     fun objectFromJson(json: String): Track {
         val type = object : TypeToken<Track>() {}.type
-        return gson.fromJson(json,type)
+        return gson.fromJson(json, type)
     }
 }

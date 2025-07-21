@@ -5,7 +5,8 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.playlistmaker.data.settings.ThemeChangerRepository
 
-class ThemeChangerRepositoryImpl(private val darkThemePreferences: SharedPreferences): ThemeChangerRepository {
+class ThemeChangerRepositoryImpl(private val darkThemePreferences: SharedPreferences) :
+    ThemeChangerRepository {
 
     override fun switchTheme(themeStatus: Boolean) {
         AppCompatDelegate.setDefaultNightMode(
