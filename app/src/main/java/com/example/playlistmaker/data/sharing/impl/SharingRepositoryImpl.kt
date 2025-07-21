@@ -3,7 +3,7 @@ package com.example.playlistmaker.data.sharing.impl
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.example.playlistmaker.domain.sharing.SharingRepository
+import com.example.playlistmaker.data.sharing.SharingRepository
 
 class SharingRepositoryImpl(private val contextActivity: Context) : SharingRepository {
     override fun openSupport() {
@@ -28,11 +28,11 @@ class SharingRepositoryImpl(private val contextActivity: Context) : SharingRepos
         contextActivity.startActivity(userAgreementIntent)
     }
 
-    override fun shareApp(link: String) {
-        val shareApp = Intent(Intent.ACTION_SEND).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, link)
+    override fun shareApp() {
+        val shareApp = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("yourEmail@ya.ru"))
+            putExtra(Intent.EXTRA_TEXT, "https://practicum.yandex.ru/android-developer/")
         }
         contextActivity.startActivity(shareApp)
     }

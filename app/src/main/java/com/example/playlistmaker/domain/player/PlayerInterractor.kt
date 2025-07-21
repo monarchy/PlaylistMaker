@@ -3,10 +3,11 @@ package com.example.playlistmaker.domain.player
 import androidx.lifecycle.LiveData
 import com.example.playlistmaker.util.MediaPlayerState
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.StateFlow
 
 interface PlayerInterractor {
 
-    val mediaPlayerState: LiveData<MediaPlayerState>
+    val mediaPlayerState: StateFlow<MediaPlayerState>
 
     fun playBackControl(scope: CoroutineScope)
 

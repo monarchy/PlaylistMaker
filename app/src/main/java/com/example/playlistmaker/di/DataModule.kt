@@ -2,6 +2,8 @@ package com.example.playlistmaker.di
 
 import android.content.Context
 import android.media.MediaPlayer
+import androidx.room.Room
+import com.example.playlistmaker.data.db.AppDatabase
 import com.example.playlistmaker.data.network.ITunesApi
 import com.example.playlistmaker.data.network.NetworkClient
 import com.example.playlistmaker.data.network.RetrofitNetworkClient
@@ -51,6 +53,11 @@ val dataModule = module {
     single(named("first_launch")) {
         androidContext()
             .getSharedPreferences(PreferenceFiles.FIRST_LAUNCH, Context.MODE_PRIVATE)
+    }
+
+    single{
+        Room.databaseBuilder(androidContext(),AppDatabase::class.java, "database_db")
+            .build()
     }
 
     single { GsonClient }
