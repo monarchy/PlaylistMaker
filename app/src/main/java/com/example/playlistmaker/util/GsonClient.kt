@@ -8,7 +8,7 @@ object GsonClient {
 
     private val gson = Gson()
 
-    fun listToJson(tracks: MutableList<Track>): String {
+    fun listToJson(tracks: List<Track>): String {
         return gson.toJson(tracks)
     }
 
@@ -21,12 +21,8 @@ object GsonClient {
         return gson.fromJson(json, type)
     }
 
-    fun fromJsonToPlayer(json: String): Track {
-        var track: Track = gson.fromJson(json, object : TypeToken<Track>() {}.type)
-        val newArtWorkUrl = track.artworkUrl100.replaceAfterLast('/', FORMAT_SIZE)
-        track.artworkUrl100 = newArtWorkUrl
-        return track
+    fun objectFromJson(json: String): Track {
+        val type = object : TypeToken<Track>() {}.type
+        return gson.fromJson(json,type)
     }
-
-    private const val FORMAT_SIZE = "512x512bb.jpg"
 }

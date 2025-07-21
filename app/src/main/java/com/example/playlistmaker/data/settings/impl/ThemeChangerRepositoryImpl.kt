@@ -1,8 +1,9 @@
 package com.example.playlistmaker.data.settings.impl
 
+
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.playlistmaker.domain.settings.ThemeChangerRepository
+import com.example.playlistmaker.data.settings.ThemeChangerRepository
 
 class ThemeChangerRepositoryImpl(private val darkThemePreferences: SharedPreferences): ThemeChangerRepository {
 
