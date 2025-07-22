@@ -13,17 +13,11 @@
         <action
             android:id="@+id/action_mediaLibraryFragment_to_playerFragment"
             app:destination="@id/playerFragment"
-            app:enterAnim="@anim/player_enter"
-            app:exitAnim="@anim/search_fade_out"
-            app:popEnterAnim="@anim/search_fade_in"
-            app:popExitAnim="@anim/player_exit" />
+             />
         <action
             android:id="@+id/action_mediaLibraryFragment_to_playlistCreateFragment"
             app:destination="@id/playlistCreateFragment"
-            app:enterAnim="@anim/player_enter"
-            app:exitAnim="@anim/search_fade_out"
-            app:popEnterAnim="@anim/search_fade_in"
-            app:popExitAnim="@anim/player_exit" />
+             />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -33,10 +27,7 @@
         <action
             android:id="@+id/action_searchFragment_to_playerFragment"
             app:destination="@id/playerFragment"
-            app:enterAnim="@anim/player_enter"
-            app:exitAnim="@anim/search_fade_out"
-            app:popEnterAnim="@anim/search_fade_in"
-            app:popExitAnim="@anim/player_exit" />
+            />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -51,10 +42,7 @@
         <action
             android:id="@+id/action_playerFragment_to_playlistCreateFragment"
             app:destination="@id/playlistCreateFragment"
-            app:enterAnim="@anim/player_enter"
-            app:exitAnim="@anim/search_fade_out"
-            app:popEnterAnim="@anim/search_fade_in"
-            app:popExitAnim="@anim/player_exit" />
+             />
     </fragment>
     <fragment
         android:id="@+id/favoriteTracksFragment"
