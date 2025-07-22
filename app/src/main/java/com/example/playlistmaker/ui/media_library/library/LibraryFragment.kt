@@ -1,6 +1,7 @@
 package com.example.playlistmaker.ui.media_library.library
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,33 +22,41 @@ class LibraryFragment : Fragment() {
     private lateinit var binding: FragmentLibraryBinding
     private lateinit var playlistAdapter: PlaylistListAdapter
     private val viewModel: LibraryFragmentViewModel by viewModel()
+    private val TAG = "LibraryFragment"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLibraryBinding.inflate(inflater, container, false)
+        Log.d(TAG, "onCreateView called")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG, "onViewCreated called")
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.screenState.collect() { state ->
+                    Log.d(TAG, "Rendering state: $state")
                     render(state)
                 }
             }
         }
 
-
-        playlistAdapter = PlaylistListAdapter(requireContext())
-        binding.recyclerView.adapter = playlistAdapter
-
+        playlistAdapter = PlaylistListAdapter(requireContext()) { playlist ->
+            Log.d(TAG, "Clicked playlist: ${playlist.playlistName}, ID: ${playlist.playlistId}")
+            val bottomSheet = PlaylistTrackBottomSheetFragment.newInstance(playlist.playlistId)
+            bottomSheet.show(requireActivity().supportFragmentManager, "PlaylistTrackBottomSheet")
+        }
         binding.createPlaylist.setOnClickListener {
             parentFragment?.findNavController()
                 ?.navigate(R.id.action_mediaLibraryFragment_to_playlistCreateFragment)
         }
+        binding.recyclerView.adapter = playlistAdapter
+        Log.d(TAG, "RecyclerView adapter set")
     }
 
     private fun render(favoriteState: PlaylistLibraryState) {
@@ -58,12 +67,13 @@ class LibraryFragment : Fragment() {
                 playlistAdapter.playlists = favoriteState.playlistList
                 playlistAdapter.notifyDataSetChanged()
                 binding.recyclerView.visibility = View.VISIBLE
+                Log.d(TAG, "Rendered Content with ${favoriteState.playlistList.size} playlists")
             }
-
             PlaylistLibraryState.Empty -> {
                 binding.placeholder.visibility = View.VISIBLE
                 binding.emptyText.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.GONE
+                Log.d(TAG, "Rendered Empty state")
             }
         }
     }
@@ -73,5 +83,4 @@ class LibraryFragment : Fragment() {
             arguments = bundleOf()
         }
     }
-
 }
