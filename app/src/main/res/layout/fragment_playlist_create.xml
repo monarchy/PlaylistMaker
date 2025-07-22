@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/fragmentStyle"
-    tools:context=".ui.playlist_create_form.PlaylistCreateFragment">
+    tools:context=".ui.playlist_create_form.PlaylistCreateFragment"
+    >
 
     <Toolbar
         android:id="@+id/back"
