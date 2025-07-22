@@ -1,7 +1,10 @@
 package com.example.playlistmaker.presentation.player
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.db.favorite.FavoriteControlInteractor
 import com.example.playlistmaker.domain.db.playlist.PlaylistInteractor
 import com.example.playlistmaker.domain.models.Playlist
@@ -21,8 +24,9 @@ class PlayerViewModel(
     initialTrack: Track,
     private var mediaPlayer: PlayerInterractor?,
     private val databaseInteractor: FavoriteControlInteractor,
-    private val playlistInteractor: PlaylistInteractor
-) : ViewModel() {
+    private val playlistInteractor: PlaylistInteractor,
+    application: Application
+) : AndroidViewModel(application) {
 
     override fun onCleared() {
         super.onCleared()
@@ -147,11 +151,11 @@ class PlayerViewModel(
             playlistInteractor.addTrackToPlaylist(playlist, track).collect { result ->
                 when {
                     result.isSuccess -> {
-                        val responseString = result.getOrNull() ?: "Трек добавлен"
+                        val responseString = result.getOrNull() ?: getApplication<Application>().getString(R.string.track_added)
                         _behaviorSheetState.value = BehaviorState.TrackIsAdded(responseString)
                     }
                     result.isFailure -> {
-                        val responseString = result.exceptionOrNull()?.message ?: "Трек добавлен"
+                        val responseString = result.exceptionOrNull()?.message ?: getApplication<Application>().getString(R.string.track_added)
                         _behaviorSheetState.value = BehaviorState.TrackIsNotAdded(responseString)
                     }
                 }

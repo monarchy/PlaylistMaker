@@ -1,7 +1,9 @@
 package com.example.playlistmaker.data.db.playlist
 
+import android.content.Context
 import android.database.sqlite.SQLiteConstraintException
 import androidx.room.withTransaction
+import com.example.playlistmaker.R
 import com.example.playlistmaker.data.converters.PlaylistDbConverter
 import com.example.playlistmaker.data.converters.TrackDbConverter
 import com.example.playlistmaker.data.db.AppDatabase
@@ -18,7 +20,8 @@ import kotlinx.coroutines.flow.map
 class PlaylistDbRepositoryImpl(
     private val db: AppDatabase,
     private val playlistDbConverter: PlaylistDbConverter,
-    private val trackDbConverter: TrackDbConverter
+    private val trackDbConverter: TrackDbConverter,
+    private val context: Context
 ) : PlaylistDbRepository {
 
     override fun createPlaylist(
@@ -26,9 +29,13 @@ class PlaylistDbRepositoryImpl(
     ): Flow<Result<String>> = flow {
         try {
             db.playlistDao().createPlaylist(playlistDbConverter.map(playlist))
-            emit(Result.success("Плейлист ${playlist.playlistName} создан"))
+            emit(Result.success(context.getString(R.string.playlist_created, playlist.playlistName)))
         } catch (e: SQLiteConstraintException) {
-            emit(Result.failure(Exception("Плейлист ${playlist.playlistName} уже существует.")))
+            emit(Result.failure(Exception(
+                context.getString(
+                    R.string.playlist_already_exists,
+                    playlist.playlistName
+                ))))
         }
     }
 
@@ -78,9 +85,13 @@ class PlaylistDbRepositoryImpl(
             db.withTransaction {
                 addTrackToPlaylistInternal(trackEntity, playlist.playlistId)
             }
-            emit(Result.success("Добавлено в плейлист \"${playlist.playlistName}\""))
+            emit(Result.success(context.getString(R.string.added_to_playlist, playlist.playlistName)))
         } catch (e: SQLiteConstraintException) {
-            emit(Result.failure(Exception("Трек уже добавлен в плейлист \"${playlist.playlistName}\"")))
+            emit(Result.failure(Exception(
+                context.getString(
+                    R.string.track_already_added,
+                    playlist.playlistName
+                ))))
         }
     }
 

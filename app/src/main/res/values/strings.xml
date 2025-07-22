@@ -39,6 +39,11 @@
     <string name="cancellation">Отмена</string>
     <string name="settingsPermissionDialogTitle">Откройте доступ к галерее</string>
     <string name="settingsPermissionDialogDescription">Для возможности загрузки изображения необходимо предоставить права доступа в настройках</string>
+    <string name="track_added">Трек добавлен</string>
+    <string name="playlist_created">Плейлист %1$s создан</string>
+    <string name="playlist_already_exists">Плейлист %1$s уже существует.</string>
+    <string name="added_to_playlist">Добавлено в плейлист \"%1$s\"</string>
+    <string name="track_already_added">Трек уже добавлен в плейлист \"%1$s\"</string>
     <plurals name="items_count">
         <item quantity="zero">%d треков</item>
         <item quantity="one">%d трек</item>
