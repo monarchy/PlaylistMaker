@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class PlayerViewModel(
-    track: Track,
+    initialTrack: Track,
     private var mediaPlayer: PlayerInterractor?,
     private val databaseInteractor: FavoriteControlInteractor,
     private val playlistInteractor: PlaylistInteractor
@@ -30,10 +30,12 @@ class PlayerViewModel(
         mediaPlayer = null
     }
 
-    private val _currentTrack = MutableStateFlow<Track>(track)
-    val currentTrack: StateFlow<Track> get() = _currentTrack
     private val _uiState = MutableStateFlow<UiPlayerState>(
-        UiPlayerState.Default(false, "00:00", track.isFavorite)
+        UiPlayerState.Default(
+            isPlayButtonEnabled = false,
+            progress = "00:00",
+            track = initialTrack
+        )
     )
     val uiState: StateFlow<UiPlayerState> = _uiState
 
@@ -41,51 +43,47 @@ class PlayerViewModel(
     val behaviorSheetState: StateFlow<BehaviorState> get() = _behaviorSheetState
 
     init {
-        mediaPlayer?.preparePlayer(track.previewUrl)
+        mediaPlayer?.preparePlayer(initialTrack.previewUrl)
         combineFlows()
     }
 
-
     private fun combineFlows() {
         viewModelScope.launch {
-            combine(mediaPlayer!!.mediaPlayerState, _currentTrack) { playerState, currentTrack ->
-                mapToUiState(playerState, currentTrack.isFavorite)
+            combine(mediaPlayer!!.mediaPlayerState, _uiState) { playerState, currentState ->
+                mapToUiState(playerState, currentState.track)
             }
                 .collect { _uiState.value = it }
         }
     }
 
-    private fun mapToUiState(playerState: MediaPlayerState, isFavorite: Boolean): UiPlayerState =
+    private fun mapToUiState(playerState: MediaPlayerState, track: Track): UiPlayerState =
         when (playerState) {
             is MediaPlayerState.Default -> {
                 UiPlayerState.Default(
-                    playerState.isPlayButtonEnabled,
-                    playerState.progress,
-                    isFavorite
+                    isPlayButtonEnabled = playerState.isPlayButtonEnabled,
+                    progress = playerState.progress,
+                    track = track
                 )
             }
-
             is MediaPlayerState.Paused -> {
                 UiPlayerState.Paused(
-                    playerState.isPlayButtonEnabled,
-                    playerState.progress,
-                    isFavorite
+                    isPlayButtonEnabled = playerState.isPlayButtonEnabled,
+                    progress = playerState.progress,
+                    track = track
                 )
             }
-
             is MediaPlayerState.Playing -> {
                 UiPlayerState.Playing(
-                    playerState.isPlayButtonEnabled,
-                    playerState.progress,
-                    isFavorite
+                    isPlayButtonEnabled = playerState.isPlayButtonEnabled,
+                    progress = playerState.progress,
+                    track = track
                 )
             }
-
             is MediaPlayerState.Prepared -> {
                 UiPlayerState.Prepared(
-                    playerState.isPlayButtonEnabled,
-                    playerState.progress,
-                    isFavorite
+                    isPlayButtonEnabled = playerState.isPlayButtonEnabled,
+                    progress = playerState.progress,
+                    track = track
                 )
             }
         }
@@ -96,9 +94,33 @@ class PlayerViewModel(
 
     fun favoriteControl() {
         viewModelScope.launch {
-            _currentTrack.value =
-                _currentTrack.value.copy(isFavorite = !_currentTrack.value.isFavorite)
-            databaseInteractor.favoriteControl(_currentTrack.value)
+            val currentTrack = _uiState.value.track
+            val updatedTrack = currentTrack.copy(isFavorite = !currentTrack.isFavorite) // copy() для Track
+            val currentState = _uiState.value
+            val newState = when (currentState) {
+                is UiPlayerState.Default -> UiPlayerState.Default(
+                    isPlayButtonEnabled = currentState.isPlayButtonEnabled,
+                    progress = currentState.progress,
+                    track = updatedTrack
+                )
+                is UiPlayerState.Prepared -> UiPlayerState.Prepared(
+                    isPlayButtonEnabled = currentState.isPlayButtonEnabled,
+                    progress = currentState.progress,
+                    track = updatedTrack
+                )
+                is UiPlayerState.Playing -> UiPlayerState.Playing(
+                    isPlayButtonEnabled = currentState.isPlayButtonEnabled,
+                    progress = currentState.progress,
+                    track = updatedTrack
+                )
+                is UiPlayerState.Paused -> UiPlayerState.Paused(
+                    isPlayButtonEnabled = currentState.isPlayButtonEnabled,
+                    progress = currentState.progress,
+                    track = updatedTrack
+                )
+            }
+            _uiState.value = newState
+            databaseInteractor.favoriteControl(updatedTrack)
         }
     }
 
@@ -108,11 +130,13 @@ class PlayerViewModel(
 
     fun getPlaylistList() {
         viewModelScope.launch(Dispatchers.IO) {
-            playlistInteractor.getAllPlaylists().collect() { playlists ->
+            playlistInteractor.getAllPlaylists().collect { playlists ->
                 withContext(Dispatchers.Main) {
                     if (playlists.isEmpty()) {
                         _behaviorSheetState.value = BehaviorState.EmptyData(null)
-                    } else _behaviorSheetState.value = BehaviorState.PlaylistData(playlists)
+                    } else {
+                        _behaviorSheetState.value = BehaviorState.PlaylistData(playlists)
+                    }
                 }
             }
         }
@@ -126,7 +150,6 @@ class PlayerViewModel(
                         val responseString = result.getOrNull() ?: "Трек добавлен"
                         _behaviorSheetState.value = BehaviorState.TrackIsAdded(responseString)
                     }
-
                     result.isFailure -> {
                         val responseString = result.exceptionOrNull()?.message ?: "Трек добавлен"
                         _behaviorSheetState.value = BehaviorState.TrackIsNotAdded(responseString)
