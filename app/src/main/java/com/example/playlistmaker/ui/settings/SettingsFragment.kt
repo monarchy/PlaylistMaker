@@ -15,21 +15,21 @@ class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: SettingsViewModel by viewModel{ parametersOf(requireContext()) }
+    private val viewModel: SettingsViewModel by viewModel { parametersOf(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSettingsBinding.inflate(inflater,container,false)
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.settingsEvent.observe(viewLifecycleOwner){event ->
-            when (event){
+        viewModel.settingsEvent.observe(viewLifecycleOwner) { event ->
+            when (event) {
                 SettingsEvent.OpenSupport -> viewModel.supportEvent()
                 SettingsEvent.OpenTerms -> viewModel.termsEvent()
                 SettingsEvent.ShareApp -> viewModel.shareAppEvent()

@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
 class PlayerInterractorImpl(
     private val userMediaPlayerImpl: UserMediaPlayerRepository,
 ) : PlayerInterractor {
-    override val mediaPlayerState: StateFlow<MediaPlayerState> = userMediaPlayerImpl.mediaPlayerState
+    override val mediaPlayerState: StateFlow<MediaPlayerState> =
+        userMediaPlayerImpl.mediaPlayerState
 
     override fun playBackControl(scope: CoroutineScope) {
         userMediaPlayerImpl.playbackControl(scope)

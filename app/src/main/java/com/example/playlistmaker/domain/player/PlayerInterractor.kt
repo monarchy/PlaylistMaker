@@ -1,6 +1,5 @@
 package com.example.playlistmaker.domain.player
 
-import androidx.lifecycle.LiveData
 import com.example.playlistmaker.util.MediaPlayerState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow

@@ -1,6 +1,5 @@
 package com.example.playlistmaker.data.search.impl
 
-import android.content.SharedPreferences
 import com.example.playlistmaker.data.search.SearchHistoryRepository
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.search.SearchHistoryInteractor

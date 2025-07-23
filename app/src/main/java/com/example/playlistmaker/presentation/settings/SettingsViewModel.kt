@@ -35,19 +35,19 @@ class SettingsViewModel(
         themeChangerInteractor.changeTheme(check)
     }
 
-    fun clickOnSupport(){
+    fun clickOnSupport() {
         _settingsEvent.postValue(SettingsEvent.OpenSupport)
     }
 
-    fun clickOnTerms(){
+    fun clickOnTerms() {
         _settingsEvent.postValue(SettingsEvent.OpenTerms)
     }
 
-    fun clickOnShareApp(){
+    fun clickOnShareApp() {
         _settingsEvent.postValue(SettingsEvent.ShareApp)
     }
 
-    fun clickOnChangeTheme(check:Boolean){
+    fun clickOnChangeTheme(check: Boolean) {
         _settingsEvent.postValue(SettingsEvent.SwapTheme(check))
     }
 }

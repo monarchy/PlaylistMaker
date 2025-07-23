@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="genre">Жанр</string>
-    <string name="network_error">Проблемы со связью\\n\\nЗагрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="track_added">Трек добавлен</string>
+    <string name="playlist_created">Плейлист %1$s создан</string>
+    <string name="playlist_already_exists">Плейлист %1$s уже существует.</string>
+    <string name="track_already_added">Трек уже добавлен в плейлист \"%1$s\"</string>
 </resources>

@@ -13,6 +13,7 @@ constraintlayout = "2.1.4"
 retrofit = "2.9.0"
 lifecycleCommonJvm = "2.9.0"
 navigationFragment = "2.9.0"
+peko = "3.0.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -29,7 +30,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-lifecycle-common-jvm = { group = "androidx.lifecycle", name = "lifecycle-common-jvm", version.ref = "lifecycleCommonJvm" }
 androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
-
+peko = { module = "com.markodevcic:peko", version.ref = "peko" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

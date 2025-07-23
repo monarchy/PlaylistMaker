@@ -5,6 +5,7 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,7 @@ import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentSearchBinding
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.presentation.search.SearchViewModel
-import com.example.playlistmaker.ui.common.TrackListAdapter
+import com.example.playlistmaker.ui.common.trackList.TrackListAdapter
 import com.example.playlistmaker.ui.player.PlayerFragment
 import com.example.playlistmaker.util.GsonClient
 import com.example.playlistmaker.util.SearchState
@@ -74,6 +75,7 @@ class SearchFragment : Fragment() {
             false
         ) { track ->
             viewModel.onTrackClicked(track)
+            Log.d("STATE"," ${track.isFavorite }")
             findNavController().navigate(
                 R.id.action_searchFragment_to_playerFragment,
                 PlayerFragment.createArgs(GsonClient.objectToJson(track))
@@ -87,7 +89,7 @@ class SearchFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED){
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.screenState.collect() { state ->
                         when (state) {
                             SearchState.EmptyScreen -> emptyUi()
@@ -116,7 +118,7 @@ class SearchFragment : Fragment() {
                     binding.clearButton.visibility = clearButtonVisibility(s)
                     searchQuery = s.toString()
                     searchRequestDebounce(searchQuery!!)
-                } else if(s.isNullOrEmpty()){
+                } else if (s.isNullOrEmpty()) {
                     if (!isTextProgrammaticChange) {
                         clearRequest()
                     }
@@ -139,7 +141,7 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun clearRequest(){
+    private fun clearRequest() {
         isTextProgrammaticChange = true
         hideKeyboard(requireContext(), binding.clearButton)
         binding.searchHint.setText(STR_DEF)
@@ -189,7 +191,7 @@ class SearchFragment : Fragment() {
         binding.recyclerView.visibility = View.GONE
         binding.searchPlaceholder.visibility = View.VISIBLE
         binding.searchUpdate.visibility = View.VISIBLE
-        binding.errorImagePlaceholder.setImageDrawable(requireContext().getDrawable(R.drawable.placeholder_error))
+        binding.errorImagePlaceholder.setImageDrawable(requireContext().getDrawable(R.drawable.network_error))
         binding.errorStatus.setText(R.string.network_error)
     }
 
@@ -200,8 +202,8 @@ class SearchFragment : Fragment() {
         binding.searchUpdate.visibility = View.GONE
         binding.clearSearchHistory.visibility = View.GONE
         binding.youSearchedIt.visibility = View.GONE
-        binding.errorImagePlaceholder.setImageDrawable(requireContext().getDrawable(R.drawable.placeholder_nothing_found))
-        binding.errorStatus.setText(R.string.placeholder_no_results)
+        binding.errorImagePlaceholder.setImageDrawable(requireContext().getDrawable(R.drawable.tracks_not_found))
+        binding.errorStatus.setText(R.string.tracks_not_found)
     }
 
 

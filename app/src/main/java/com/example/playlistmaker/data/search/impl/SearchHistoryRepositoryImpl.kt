@@ -25,7 +25,7 @@ class SearchHistoryRepositoryImpl(
             }
             .take(MAX_COUNT_SEARCH_HISTORY)
         withContext(Dispatchers.IO) {
-        val json = GsonClient.listToJson(searchHistory)
+            val json = GsonClient.listToJson(searchHistory)
             searchHistoryPreferences
                 .edit()
                 .putString(HISTORY_PREFERENCES_KEY, json)
@@ -41,7 +41,7 @@ class SearchHistoryRepositoryImpl(
             ) ?: ""
         val history = if (json.isNotEmpty()) {
             GsonClient.arrayFromJson(json).let { tracks ->
-                val favoritesId = database.trackDao().getTrackId().toSet()
+                val favoritesId = database.trackDao().getAllFavoriteTracksId().first().toSet()
                 tracks.map { track ->
                     track.copy(isFavorite = favoritesId.contains(track.trackId))
                 }

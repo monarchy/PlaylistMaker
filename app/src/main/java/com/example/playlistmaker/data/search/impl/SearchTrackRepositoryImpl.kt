@@ -9,6 +9,7 @@ import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.util.Resource
 import com.example.playlistmaker.util.SearchState
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 
 class SearchTrackRepositoryImpl(
@@ -19,7 +20,7 @@ class SearchTrackRepositoryImpl(
         val response = networkClient.doRequest(TrackSearchRequest(expression))
         when (response.resultCode) {
             200 -> {
-                val idFavoriteTracks = database.trackDao().getTrackId().toSet()
+                val idFavoriteTracks = database.trackDao().getAllFavoriteTracksId().first().toSet()
                 with(response as TrackSearchResponse) {
                     val data = results.map {
                         Track(

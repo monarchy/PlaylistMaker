@@ -9,16 +9,21 @@
         android:id="@+id/mediaLibraryFragment"
         android:name="com.example.playlistmaker.ui.media_library.MediaLibraryFragment"
         android:label="fragment_media_library"
-        tools:layout="@layout/fragment_media_library" >
+        tools:layout="@layout/fragment_media_library">
         <action
             android:id="@+id/action_mediaLibraryFragment_to_playerFragment"
-            app:destination="@id/playerFragment" />
+            app:destination="@id/playerFragment"
+             />
+        <action
+            android:id="@+id/action_mediaLibraryFragment_to_playlistCreateFragment"
+            app:destination="@id/playlistCreateFragment"
+             />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.playlistmaker.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_playerFragment"
             app:destination="@id/playerFragment"
@@ -33,5 +38,20 @@
         android:id="@+id/playerFragment"
         android:name="com.example.playlistmaker.ui.player.PlayerFragment"
         android:label="fragment_player"
-        tools:layout="@layout/fragment_player" />
+        tools:layout="@layout/fragment_player">
+        <action
+            android:id="@+id/action_playerFragment_to_playlistCreateFragment"
+            app:destination="@id/playlistCreateFragment"
+             />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteTracksFragment"
+        android:name="com.example.playlistmaker.ui.media_library.favorite.FavoriteTracksFragment"
+        android:label="fragment_favorite_tracks"
+        tools:layout="@layout/fragment_favorite_tracks" />
+    <fragment
+        android:id="@+id/playlistCreateFragment"
+        android:name="com.example.playlistmaker.ui.playlist_create_form.PlaylistCreateFragment"
+        android:label="fragment_playlist_create"
+        tools:layout="@layout/fragment_playlist_create" />
 </navigation>
