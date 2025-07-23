@@ -5,5 +5,5 @@
         android:color="@color/grey"
         android:dashWidth="50dp"
         android:dashGap="35dp" />
-    <corners android:radius="4dp" />
+    <corners android:radius="8dp" />
 </shape>

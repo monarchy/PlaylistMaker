@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/settings"
+    android:id="@+id/settingsFragment"
     style="@style/fragmentStyle"
     tools:context="com.example.playlistmaker.ui.settings.SettingsFragment">
 
@@ -21,21 +21,21 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/linkApp"
-        style="@style/materialTextViewSetting"
+        style="@style/styleButton"
         android:text="@string/link_app"
         android:drawableEnd="@drawable/share"
         android:paddingEnd="16dp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/writeToSupport"
-        style="@style/materialTextViewSetting"
+        style="@style/styleButton"
         android:text="@string/link_support"
         android:drawableEnd="@drawable/support"
         android:paddingEnd="14dp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/userAgreement"
-        style="@style/materialTextViewSetting"
+        style="@style/styleButton"
         android:text="@string/documentation"
         android:drawableEnd="@drawable/arrow_forward"
         android:paddingEnd="20dp" />

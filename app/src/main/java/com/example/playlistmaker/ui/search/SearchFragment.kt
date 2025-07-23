@@ -5,7 +5,6 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,11 +19,11 @@ import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentSearchBinding
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.presentation.search.SearchViewModel
-import com.example.playlistmaker.ui.common.trackList.TrackListAdapter
+import com.example.playlistmaker.ui.adapters.trackList.TrackListAdapter
 import com.example.playlistmaker.ui.player.PlayerFragment
 import com.example.playlistmaker.util.GsonClient
 import com.example.playlistmaker.util.SearchState
-import com.example.playlistmaker.util.debounce
+import com.example.playlistmaker.util.click_listenners.debounce
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -75,10 +74,9 @@ class SearchFragment : Fragment() {
             false
         ) { track ->
             viewModel.onTrackClicked(track)
-            Log.d("STATE"," ${track.isFavorite }")
             findNavController().navigate(
                 R.id.action_searchFragment_to_playerFragment,
-                PlayerFragment.createArgs(GsonClient.objectToJson(track))
+                PlayerFragment.createArgs(GsonClient.trackToJson(track))
             )
         }
 
@@ -88,17 +86,15 @@ class SearchFragment : Fragment() {
         binding.recyclerView.adapter = searchAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.screenState.collect() { state ->
-                        when (state) {
-                            SearchState.EmptyScreen -> emptyUi()
-                            SearchState.Loading -> loadingUi()
-                            SearchState.NetworkError -> networkErrorUi()
-                            SearchState.NothingFound -> tracksNotFoundUi()
-                            is SearchState.ShowHistoryContent -> historyUi(state.tracks)
-                            is SearchState.ShowSearchContent -> contentUi(state.tracks)
-                        }
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.screenState.collect() { state ->
+                    when (state) {
+                        SearchState.EmptyScreen -> emptyUi()
+                        SearchState.Loading -> loadingUi()
+                        SearchState.NetworkError -> networkErrorUi()
+                        SearchState.NothingFound -> tracksNotFoundUi()
+                        is SearchState.ShowHistoryContent -> historyUi(state.tracks)
+                        is SearchState.ShowSearchContent -> contentUi(state.tracks)
                     }
                 }
             }

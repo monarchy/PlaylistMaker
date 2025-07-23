@@ -15,10 +15,10 @@ import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentFavoriteTracksBinding
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.presentation.library.FavoriteTracksViewModel
-import com.example.playlistmaker.ui.common.trackList.TrackListAdapter
+import com.example.playlistmaker.ui.adapters.trackList.TrackListAdapter
 import com.example.playlistmaker.ui.player.PlayerFragment
 import com.example.playlistmaker.util.GsonClient
-import com.example.playlistmaker.util.debounce
+import com.example.playlistmaker.util.click_listenners.debounce
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -60,7 +60,7 @@ class FavoriteTracksFragment : Fragment() {
         ) { track ->
             parentFragment?.findNavController()?.navigate(
                 R.id.action_mediaLibraryFragment_to_playerFragment,
-                PlayerFragment.createArgs(GsonClient.objectToJson(track))
+                PlayerFragment.createArgs(GsonClient.trackToJson(track))
             )
         }
         trackAdapter = TrackListAdapter(onTrackClickDebounce)

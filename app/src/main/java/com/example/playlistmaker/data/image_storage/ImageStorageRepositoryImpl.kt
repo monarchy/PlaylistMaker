@@ -24,19 +24,26 @@ class ImageStorageRepositoryImpl(
                     .compress(Bitmap.CompressFormat.JPEG, 60, outputStream)
             }
         }
-        fileName
+        "file://${file}"
     }
 
-    override suspend fun getImage(fileName: String?): String? {
-        if (fileName.isNullOrEmpty()) return null
-        return File(picturesDir, fileName).absolutePath
-    }
-
-    override suspend fun deleteFromStorage(fileName: String) {
+    override suspend fun deleteFromStorage(fileUri: String) {
         withContext(Dispatchers.IO) {
-            File(picturesDir, fileName).delete()
+            val cleanPath = fileUri.removePrefix("file://")
+            File(cleanPath).delete()
         }
-
     }
+
+    override suspend fun isContainsInStorage(fileUri: String): Boolean =
+        withContext(Dispatchers.IO) {
+            try {
+                val fileName = File(fileUri.removePrefix("file://")).name
+                val file = File(picturesDir, fileName)
+
+                file.exists() && file.isFile
+            } catch (e: Exception) {
+                false
+            }
+        }
 }
 

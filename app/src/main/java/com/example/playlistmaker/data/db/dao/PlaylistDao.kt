@@ -30,7 +30,10 @@ interface PlaylistDao {
     @Query("UPDATE playlist_table SET tracksCount=:trackCount WHERE playlistId=:playlistId")
     suspend fun updateTracksCount(trackCount: Long, playlistId: Long)
 
+    @Query("DELETE FROM connection_table WHERE playlistId = :playlistId")
+    suspend fun deleteAllTracksFromPlaylist(playlistId: Long)
+
     @Transaction
     @Query("SELECT * FROM playlist_table WHERE playlistId = :playlistId")
-    fun getPlaylistWithTracks(playlistId: Long): Flow<PlaylistWithTracksDb>
+    fun getPlaylistWithTracks(playlistId: Long): Flow<PlaylistWithTracksDb?>
 }

@@ -4,33 +4,33 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.domain.db.playlist.PlaylistInteractor
 import com.example.playlistmaker.domain.models.Playlist
-import com.example.playlistmaker.ui.playlist_create_form.PlaylistCreateState
+import com.example.playlistmaker.ui.playlist_forms.states.PlaylistCreateState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class PlaylistCreateViewModel(private val playlistInteractor: PlaylistInteractor) :
+open class PlaylistCreateViewModel(private val playlistInteractor: PlaylistInteractor) :
     ViewModel() {
 
-    private val _playlistFormState =
+    protected open val _playlistFormState =
         MutableStateFlow<PlaylistCreateState>(PlaylistCreateState.Default())
 
     val playlistFormState: StateFlow<PlaylistCreateState> get() = _playlistFormState
 
-    fun createPlaylist(playlistName: String, playlistTitle: String?, posterId: String?) {
+    open fun playlistApply(playlistName: String, playlistTitle: String?, imagePath: String?) {
         viewModelScope.launch {
             playlistInteractor.createPlaylist(
                 convertToPlaylist(
                     playlistName,
                     playlistTitle,
-                    posterId
+                    imagePath
                 )
             ).collect { result ->
                 when {
                     result.isSuccess -> {
                         val successMessage = result.getOrNull() ?: "Плейлист создан"
                         _playlistFormState.value =
-                            PlaylistCreateState.Denied(successMessage)
+                            PlaylistCreateState.Success(successMessage)
                     }
 
                     result.isFailure -> {

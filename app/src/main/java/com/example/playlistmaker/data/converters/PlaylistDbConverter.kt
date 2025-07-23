@@ -27,9 +27,9 @@ class PlaylistDbConverter {
         )
     }
 
-    fun map(playlistWithTracksDb: PlaylistWithTracksDb): PlaylistWithTracks {
+    fun map(playlistWithTracksDb: PlaylistWithTracksDb?): PlaylistWithTracks {
         return PlaylistWithTracks(
-            playlistInfo = map(playlistWithTracksDb.playlist),
+            playlistInfo = map(playlistWithTracksDb!!.playlist),
             trackList = playlistWithTracksDb.tracks.map { trackEntity ->
                 TrackDbConverter().map(trackEntity)
             }
