@@ -63,7 +63,7 @@
     <string name="deleteTrackDialogTitle">Хотите удалить трек?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
-    <string name="change">Изменить</string>
+    <string name="change">Сохранить</string>
     <string name="editor">Редактор</string>
     <string name="empty_title">Описание отсутствует.</string>
     <string name="empty_trackList">Вы не добавили ни одного\nтрека в плейлист</string>
