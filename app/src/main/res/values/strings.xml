@@ -71,4 +71,6 @@
     <string name="yandex_ru_legal_practicum_offer">https://yandex.ru/legal/practicum_offer/</string>
     <string name="yandex_ru_android_developer">https://practicum.yandex.ru/android-developer/</string>
     <string name="support_email">support@yandex.ru</string>
+    <string name="songs_list">Best Songs Ever</string>
+    <string name="year">2022</string>
 </resources>
