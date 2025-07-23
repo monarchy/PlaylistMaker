@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.playlistmaker.domain.settings.SettingsEvent
 import com.example.playlistmaker.domain.settings.ThemeChangerInteractor
-import com.example.playlistmaker.domain.shairing.SharingInteractor
-import com.example.playlistmaker.util.SingleOnClickEvent
+import com.example.playlistmaker.domain.shairing.settings.SharingInteractor
+import com.example.playlistmaker.util.click_listenners.SingleOnClickEvent
 
 class SettingsViewModel(
     private val sharingInteractor: SharingInteractor,

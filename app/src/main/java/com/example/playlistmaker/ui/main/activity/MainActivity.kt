@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.playerFragment, R.id.playlistCreateFragment -> {
+                R.id.playerFragment, R.id.playlistCreateFragment, R.id.playerFragment,R.id.playlistFragment, R.id.playlistEditFragment -> {
                     binding.bottomNav.visibility = View.GONE
                     systemBottomPadding(APPLY_BOTTOM_PADDING)
                 }

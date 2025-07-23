@@ -1,28 +1,38 @@
 package com.example.playlistmaker.util
 
+import com.example.playlistmaker.domain.models.Playlist
 import com.example.playlistmaker.domain.models.Track
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 
 object GsonClient {
 
-    private val gson = Gson()
+    private val gson = GsonBuilder().serializeNulls().create()
 
-    fun listToJson(tracks: List<Track>): String {
+    fun trackListToJson(tracks: List<Track>): String {
         return gson.toJson(tracks)
     }
 
-    fun objectToJson(track: Track): String {
+    fun trackToJson(track: Track): String {
         return gson.toJson(track)
     }
 
-    fun arrayFromJson(json: String): MutableList<Track> {
+    fun trackListFromJson(json: String): MutableList<Track> {
         val type = object : TypeToken<MutableList<Track>>() {}.type
         return gson.fromJson(json, type)
     }
 
-    fun objectFromJson(json: String): Track {
+    fun trackFromJson(json: String): Track {
         val type = object : TypeToken<Track>() {}.type
+        return gson.fromJson(json, type)
+    }
+
+    fun playlistToJson(playlist: Playlist): String {
+        return gson.toJson(playlist)
+    }
+
+    fun playlistFromJson(json: String): Playlist {
+        val type = object : TypeToken<Playlist>() {}.type
         return gson.fromJson(json, type)
     }
 }

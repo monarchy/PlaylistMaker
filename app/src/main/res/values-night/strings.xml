@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="track_added">Трек добавлен</string>
-    <string name="playlist_created">Плейлист %1$s создан</string>
-    <string name="playlist_already_exists">Плейлист %1$s уже существует.</string>
-    <string name="track_already_added">Трек уже добавлен в плейлист \"%1$s\"</string>
+    <string name="thanks_to_devs">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="yandex_ru_legal_practicum_offer">https://yandex.ru/legal/practicum_offer/</string>
+    <string name="yandex_ru_android_developer">https://practicum.yandex.ru/android-developer/</string>
 </resources>

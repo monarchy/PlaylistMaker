@@ -6,7 +6,7 @@ import com.example.playlistmaker.domain.models.Track
 class TrackDbConverter {
     fun map(trackEntity: TracksEntity): Track {
         return Track(
-            true,
+            trackEntity.isFavorite,
             trackEntity.trackId,
             trackEntity.trackName,
             trackEntity.artistName,
@@ -34,5 +34,23 @@ class TrackDbConverter {
             track.previewUrl,
             isFavorite = track.isFavorite
         )
+    }
+
+    fun map(trackList: List<TracksEntity>): List<Track> {
+        return trackList.map { track ->
+            Track(
+                isFavorite = track.isFavorite,
+                trackId = track.trackId,
+                trackName = track.trackName,
+                artistName = track.artistName,
+                trackTimeMillis = track.trackTimeMillis,
+                artworkUrl100 = track.artworkUrl100,
+                collectionName = track.collectionName,
+                releaseDate = track.releaseDate,
+                primaryGenreName = track.primaryGenreName,
+                country = track.country,
+                previewUrl = track.previewUrl
+            )
+        }
     }
 }

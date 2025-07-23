@@ -16,7 +16,7 @@
         android:id="@+id/track_name"
         android:maxLines="1"
         android:ellipsize="end"
-        tools:text="текст" />
+        tools:text="Очень длинное название трека, которое будет обрезано и заменено многоточием" />
 
     <LinearLayout style="@style/trackLayoutLinearDescription">
 

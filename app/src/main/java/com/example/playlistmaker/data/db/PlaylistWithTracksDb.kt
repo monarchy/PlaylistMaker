@@ -19,5 +19,5 @@ data class PlaylistWithTracksDb(
             entityColumn = "trackId"
         )
     )
-    val tracks: List<TracksEntity>
+    val tracks: List<TracksEntity>  // Итоговый список треков
 )

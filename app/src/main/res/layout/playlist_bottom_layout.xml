@@ -8,7 +8,8 @@
 
     <ImageView
         android:id="@+id/cover"
-        style="@style/playlistLayoutCoverStyle"
+        style="@style/playlistCreateLayoutCoverStyle"
+        android:contentDescription="@string/album"
         tools:src="@drawable/track_placeholder" />
 
     <TextView
@@ -16,7 +17,7 @@
         style="@style/recItemTitle"
         android:ellipsize="end"
         android:maxLines="1"
-        tools:text="текст" />
+        tools:text="Очень длинное название трека, которое будет обрезано и заменено многоточием" />
 
     <LinearLayout style="@style/trackLayoutLinearDescription">
 

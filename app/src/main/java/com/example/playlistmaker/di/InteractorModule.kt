@@ -13,8 +13,8 @@ import com.example.playlistmaker.domain.search.SearchTrackInteractor
 import com.example.playlistmaker.domain.search.impl.SearchTrackInteractorImpl
 import com.example.playlistmaker.domain.settings.ThemeChangerInteractor
 import com.example.playlistmaker.domain.settings.impl.ThemeChangerInteractorImpl
-import com.example.playlistmaker.domain.shairing.SharingInteractor
-import com.example.playlistmaker.domain.shairing.impl.SharingInteractorImpl
+import com.example.playlistmaker.domain.shairing.settings.SharingInteractor
+import com.example.playlistmaker.domain.shairing.settings.impl.SharingInteractorImpl
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
@@ -44,7 +44,7 @@ val interactorModule = module {
         FavoriteControlInteractorImpl(get())
     }
 
-    factory<PlaylistInteractor> {
-        PlaylistInteractorImpl(get(), get())
+    factory<PlaylistInteractor> {(context: Context) ->
+        PlaylistInteractorImpl(get(), get(), get{ parametersOf(context) })
     }
 }

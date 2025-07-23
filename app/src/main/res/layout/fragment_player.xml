@@ -242,10 +242,10 @@
         android:visibility="gone" />
 
     <LinearLayout
-        android:id="@+id/playerSheetBehavior"
+        android:id="@+id/tracksSheetBehavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/backgroun_for_sheet"
+        android:background="@drawable/background_for_sheet"
         android:orientation="vertical"
         app:behavior_hideable="true"
         app:behavior_peekHeight="505dp"

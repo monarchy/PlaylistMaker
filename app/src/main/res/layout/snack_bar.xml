@@ -14,6 +14,6 @@
         style="@style/snackBarTextStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:text="Плейлист создан" />
+        tools:text="Плейлист BeSt SoNg EvEr! создан" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

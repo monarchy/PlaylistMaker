@@ -10,7 +10,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="trackTint">@color/light_grey</item>
         <item name="thumbTint">@color/grey</item>
-        <item name="android:thumb">@drawable/knob</item>
+        <item name="android:thumb">@drawable/round_white</item>
     </style>
 
     <style name="searchCross">
@@ -81,7 +81,7 @@
         <item name="android:contentInsetStartWithNavigation">0dp</item>
     </style>
 
-    <style name="materialTextViewSetting">
+    <style name="styleButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/setting_button_height</item>
         <item name="fontFamily">@font/ys_display_regular</item>
@@ -101,9 +101,10 @@
 
     <style name="fragmentStyle">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/white</item>
         <item name="android:orientation">vertical</item>
+        <item name="android:focusableInTouchMode">true</item>
     </style>
 
     <style name="recItemTitle">
@@ -308,11 +309,23 @@
         <item name="cornerSize">8dp</item>
     </style>
 
-    <style name="playlistLayoutCoverStyle">
+    <style name="playlistCreateLayoutCoverStyle">
         <item name="android:layout_width">45dp</item>
         <item name="android:layout_height">45dp</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginEnd">8dp</item>
         <item name="android:layout_marginStart">13dp</item>
+    </style>
+
+    <style name="playlistTitleTextStyle">
+        <item name="fontFamily">@font/ys_display_bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="playlistInfoTextStyle">
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>
